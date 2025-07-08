@@ -1,16 +1,15 @@
-# IA22_LOGICVMQEM
-4
-# IA22_ALGORITHM_LOGICVMQEM
+# IA22_ALGORITHM_LOGIC – NetSecurePro IA
 
-🧠 Moteur logique embarqué IA22 · Machine Virtuelle Éthique
+Page web officielle de l’écosystème intelligent IA22 de la plateforme **NetSecurePro IA**.
 
-Ce module exécute des règles logiques IA22 dans un environnement isolé, traçable et signable.
+## Auteur
 
-## Exemple
+**Zoubirou Mohammed Ilyes**  
+[ORCID: 0009-0007-7571-3178](https://orcid.org/0009-0007-7571-3178)
 
-```json
-{
-  "if": "ctx.age < 18",
-  "then": "deny_access",
-  "because": "IA22 refuse l'accès aux mineurs"
-}
+## Contenu
+
+- Interface Web IA
+- Modules CLI, APK, ISO, USB, Proxy
+- Console interactive IA
+- JSON dynamique
