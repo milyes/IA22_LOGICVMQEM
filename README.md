@@ -1,15 +1,11 @@
-# IA22_ALGORITHM_LOGIC – NetSecurePro IA
+# IA22-LOGICVMQEM — NetSecurePro IA
+> Cybersécurité IA Locale / QEMU / ISO / WebView
 
-Page web officielle de l’écosystème intelligent IA22 de la plateforme **NetSecurePro IA**.
+Auteur : Zoubirou Mohammed Ilyes  
+ORCID : https://orcid.org/0009-0007-7571-3178  
 
-## Auteur
+🔗 Dépôt Officiel : https://github.com/milyes/IA22_LOGICVMQEM  
 
-**Zoubirou Mohammed Ilyes**  
-[ORCID: 0009-0007-7571-3178](https://orcid.org/0009-0007-7571-3178)
+Projet visant à démontrer l’intégration IA locale, ISO bootable QEMU et interface WebView sécurisée, avec QR code de lancement et splash personnalisé NetSecurePro.
 
-## Contenu
-
-- Interface Web IA
-- Modules CLI, APK, ISO, USB, Proxy
-- Console interactive IA
-- JSON dynamique
+![splash](splash_netsecurepro.png)
