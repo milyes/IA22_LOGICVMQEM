@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Console IA22 – Analyse Web</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+    header, footer {
+      background-color: #0078D7;
+      color: white;
+      padding: 20px 0;
+    }
+    main {
+      padding: 30px;
+    }
+    textarea {
+      width: 80%;
+      height: 150px;
+      font-size: 16px;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+    button {
+      background-color: #0078D7;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      margin: 5px;
+    }
+    #console {
+      margin-top: 20px;
+      padding: 15px;
+      background-color: #1c1f26;
+      color: #00ff99;
+      border-radius: 6px;
+      width: 80%;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: left;
+      font-family: monospace;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Console IA22 Web</h1>
+    <p>Analyse intelligente de logique IA – HTML, JSON, Python, Bash</p>
+  </header>
+
+  <main>
+    <textarea id="logicInput" placeholder="Entre ta logique IA ici..."></textarea><br>
+    <button onclick="launchAnalysis()">Lancer Analyse IA</button>
+    <div id="console">🧠 Résultat IA22 affiché ici...</div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 – NetSecurePro IA | Zoubirou Mohammed Ilyes</p>
+  </footer>
+
+  <script>
+    function detectCodeType(code) {
+      if (code.includes("<html") || code.includes("</html>")) return "HTML";
+      if (code.includes("{") && code.includes(":")) return "JSON";
+      if (code.includes("def ") || code.includes("import ")) return "Python";
+      if (code.includes("#!") || code.includes("echo")) return "Bash";
+      return "Inconnu";
+    }
+
+    function launchAnalysis() {
+      const code = document.getElementById("logicInput").value;
+      const consoleDiv = document.getElementById("console");
+
+      const type = detectCodeType(code);
+      let result = `🔍 Type détecté : ${type}\n\n`;
+
+      switch (type) {
+        case "HTML":
+          result += "🧠 Analyse IA : Structure HTML détectée.\n💡 Suggestion : Utilise <section> ou <article>.\n";
+          break;
+        case "JSON":
+          result += "🧠 Analyse IA : JSON bien formé.\n💡 Suggestion : Valide avec jq.\n";
+          break;
+        case "Python":
+          result += "🧠 Analyse IA : Script Python détecté.\n💡 Suggestion : Ajoute des docstrings.\n";
+          break;
+        case "Bash":
+          result += "🧠 Analyse IA : Script shell détecté.\n💡 Suggestion : Utilise set -e.\n";
+          break;
+        default:
+          result += "🧠 Analyse IA : Type inconnu.\n💡 Suggestion : Structure ton code et ajoute des commentaires.\n";
+      }
+
+      consoleDiv.innerText = result;
+    }
+  </script>
+</body>
+</html>
