@@ -1,24 +1,67 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <title>IA22 Web Console</title>
+    <meta charset="UTF-8" />
+    <title>Démo JSON IA</title>
+    <style>
+        body {
+            background: #111;
+            color: #0f0;
+            font-family: monospace;
+            text-align: center;
+            padding: 50px;
+        }
+        pre {
+            text-align: left;
+            display: inline-block;
+            background: #222;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 0 10px #0f0;
+            max-width: 600px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        button {
+            padding: 12px 25px;
+            font-size: 16px;
+            margin-top: 20px;
+            border-radius: 8px;
+            background-color: #1E90FF;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #00FF99;
+        }
+    </style>
 </head>
 <body>
-    <h1>Console IA22 Interaction (avec JS externe)</h1>
-    <div id="output"></div>
-    <input type="text" id="userInput" placeholder="Pose ta question à l'IA...">
-    <button onclick="sendToAI()">Envoyer</button>
 
-    <!-- Lien direct vers ton fichier JS sur GitHub -->
-    <script src="https://raw.githubusercontent.com/milyes/IA22_LOGICVMQEM/refs/heads/main/ai_interaction.js"></script>
-    
+    <h1>IA22 LOGIC – Lecture JSON depuis serveur</h1>
+
+    <button onclick="fetchJSON()">📡 Charger la réponse JSON</button>
+
+    <pre id="jsonResult">Clique sur le bouton pour charger le JSON...</pre>
+
     <script>
-        function sendToAI() {
-            const userInput = document.getElementById("userInput").value;
-            const output = processAIInput(userInput);
-            document.getElementById("output").innerText = output;
+        function fetchJSON() {
+            fetch('/run') // endpoint Flask ou autre serveur qui renvoie JSON
+                .then(response => {
+                    if (!response.ok) throw new Error("Erreur réseau");
+                    return response.json();
+                })
+                .then(data => {
+                    // Affichage formaté JSON
+                    document.getElementById('jsonResult').textContent = JSON.stringify(data, null, 2);
+                })
+                .catch(err => {
+                    document.getElementById('jsonResult').textContent = "Erreur : " + err.message;
+                });
         }
     </script>
+
 </body>
 </html>
