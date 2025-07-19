@@ -1,4 +1,4 @@
-function executeIA22Logic(rule, context) {
+lfunction executeIA22Logic(rule, context) {
   try {
     const condition = new Function("ctx", `return ${rule.if};`);
     const result = condition(context);
