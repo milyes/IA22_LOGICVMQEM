@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>IA22 – Console Inventeur Technologique</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      background-color: #0f1118;
+      color: #fff;
+      font-family: "Segoe UI", sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #1a1d23;
+      text-align: center;
+      padding: 20px;
+      border-bottom: 2px solid #ffbb00;
+    }
+    h1 { margin: 0; font-size: 2em; }
+    p { margin: 5px 0; font-size: 1em; color: #bbb; }
+    main { padding: 30px; }
+    textarea {
+      width: 100%;
+      height: 100px;
+      background-color: #1f222a;
+      color: #fff;
+      font-family: monospace;
+      font-size: 1em;
+      border: none;
+      border-radius: 6px;
+      padding: 12px;
+    }
+    button {
+      margin-top: 12px;
+      padding: 12px 24px;
+      background-color: #ffbb00;
+      color: #111;
+      font-weight: bold;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    #output {
+      margin-top: 20px;
+      background-color: #191c23;
+      padding: 20px;
+      border-radius: 6px;
+      font-family: monospace;
+      white-space: pre-line;
+      box-shadow: inset 0 0 4px #000;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>IA22 – LOGIC & ALGORITHM INTELLIGENT</h1>
+    <p>🔬 Console officielle – Inventeur : Ilyes Zoubirou</p>
+  </header>
+
+  <main>
+    <textarea id="inputIA" placeholder="Tape ta commande IA ici..."></textarea>
+    <button onclick="lancerIA()">🚀 Lancer IA</button>
+    <div id="output">🧠 En attente d’une instruction IA...</div>
+  </main>
+
+  <script>
+    const reglesIA = [
+      { condition: "utilisateur = 'ilyes'", action: "✅ Inventeur identifié. Accès IA22 complet activé." },
+      { condition: "technologie = 'nouvelle'", action: "🛠️ Lancement du module IA Technologies du Futur." },
+      { condition: "projet = 'visionnaire'", action: "🔮 IA en mode projection stratégique activée." },
+      { condition: "innovation = 'active'", action: "⚡ Système IA hybride fusionné (Web + Python + C)." },
+      { condition: "système = 'compiler'", action: "🧬 Compilation cognitive IA22 en cours..." }
+    ];
+
+    function lancerIA() {
+      const entrée = document.getElementById("inputIA").value.toLowerCase();
+      const sortie = document.getElementById("output");
+      sortie.innerText = "🧠 IA22 analyse ta commande...\n";
+
+      const règle = reglesIA.find(r => entrée.includes(r.condition.toLowerCase()));
+      sortie.innerText += règle
+        ? `🔷 ${règle.action}`
+        : "❌ Aucun module IA reconnu. Essaie : utilisateur = 'ilyes', technologie = 'nouvelle'";
+    }
+  </script>
+
+</body>
+</html>
