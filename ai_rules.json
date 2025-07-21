@@ -1,12 +1,7 @@
-function interpreterIA() {
-  const input = document.getElementById("inputIA").value.toLowerCase();
-  fetch("ai_rules.json")
-    .then(res => res.json())
-    .then(data => {
-      const match = data.rules.find(rule =>
-        input.includes(rule.condition.toLowerCase())
-      );
-      const résultat = match ? `✅ Action IA : ${match.action}` : "⚠️ Aucune règle IA correspondante.";
-      document.getElementById("output").innerText = résultat;
-    });
+{
+  "rules": [
+    { "condition": "utilisateur = 'ilyes'", "action": "🔓 Accès IA22 confirmé." },
+    { "condition": "sécurité = 'active'", "action": "🔐 Modules IA verrouillés." },
+    { "condition": "mode = 'diagnostic'", "action": "🧪 Diagnostic IA en cours." }
+  ]
 }
