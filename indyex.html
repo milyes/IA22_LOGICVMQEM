@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IA22 Algorithm Logic – NetSecurePro IA</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #0f172a;
+            color: #f1f5f9;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        header {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        header img {
+            width: 120px;
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            color: #38bdf8;
+            margin-bottom: 0.3rem;
+        }
+
+        p {
+            color: #94a3b8;
+            margin: 0;
+        }
+
+        #modules, #ia-console {
+            width: 90%;
+            max-width: 600px;
+            margin: 2rem auto;
+        }
+
+        h2 {
+            color: #38bdf8;
+            border-bottom: 1px solid #334155;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        #module-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .module-card {
+            background-color: #1e293b;
+            padding: 1rem;
+            border-radius: 8px;
+            color: #cbd5e1;
+        }
+
+        #inputIA {
+            width: 100%;
+            height: 120px;
+            background-color: #1e293b;
+            color: #f1f5f9;
+            border: 1px solid #334155;
+            padding: 1rem;
+            border-radius: 8px;
+            font-size: 0.95rem;
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            padding: 0.8rem;
+            margin-top: 1rem;
+            background-color: #38bdf8;
+            color: #0f172a;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background-color: #0ea5e9;
+        }
+
+        #resultIA {
+            margin-top: 1.5rem;
+            color: #22c55e;
+            font-size: 1rem;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: auto;
+            padding: 1rem;
+            font-size: 0.85rem;
+            color: #64748b;
+        }
+
+        footer a {
+            color: #38bdf8;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <img src="assets/logo_netsecure.png" alt="Logo NetSecurePro IA">
+        <h1>IA22 – LOGIC & ALGORITHM INTELLIGENT</h1>
+        <p>Écosystème officiel de la plateforme <strong>NetSecurePro IA</strong></p>
+    </header>
+
+    <section id="modules">
+        <h2>Modules IA intégrés</h2>
+        <div id="module-cards">
+            <div class="module-card">🔒 Sécurité IA</div>
+            <div class="module-card">🤖 Détection automatique</div>
+            <div class="module-card">📊 Analyse intelligente</div>
+            <div class="module-card">🔗 Connexion API IA</div>
+        </div>
+    </section>
+
+    <section id="ia-console">
+        <h2>Console de logique IA</h2>
+        <textarea id="inputIA" placeholder="Tape ta commande IA ici..."></textarea>
+        <button onclick="runIA()">Lancer IA</button>
+        <div id="resultIA"></div>
+    </section>
+
+    <footer>
+        © 2025 – Zoubirou Mohammed Ilyes | ORCID : <a href="https://orcid.org/0009-0007-7571-3178">0009-0007-7571-3178</a>
+    </footer>
+
+    <script>
+        function runIA() {
+            const input = document.getElementById('inputIA').value;
+            const result = document.getElementById('resultIA');
+
+            if (!input.trim()) {
+                result.textContent = "⚠️ Veuillez saisir une commande IA.";
+                return;
+            }
+
+            result.textContent = "🔄 Analyse IA en cours...";
+
+            setTimeout(() => {
+                result.textContent = `✅ Résultat IA : "${input.toUpperCase()}" exécuté avec succès.`;
+            }, 1500);
+        }
+    </script>
+    
+</body>
+</html>
