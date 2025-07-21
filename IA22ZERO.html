@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <title>IA22ZERO – Console cognitive</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <title>IA22ZERO – Console cognitive autonome</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
-      background-color: #0f0f18;
+      background-color: #0f1118;
       color: #ffffff;
       font-family: "Segoe UI", sans-serif;
       margin: 0;
@@ -59,29 +59,28 @@
 
   <header>
     <h1>IA22ZERO()</h1>
-    <p>Interpréteur logique IA – Système autonome</p>
+    <p>Console IA cognitive – Règles intégrées</p>
   </header>
 
   <main>
     <h2>🧠 Entrée IA</h2>
-    <textarea id="inputIA" placeholder="Ex : if utilisateur = 'ilyes' then accès = autorisé"></textarea>
+    <textarea id="inputIA" placeholder="Ex : utilisateur = 'ilyes'"></textarea>
     <button onclick="interpreterIA()">Lancer IA</button>
-    <div id="output">🔎 En attente d'instruction IA...</div>
+    <div id="output">🧪 En attente d'une instruction IA...</div>
   </main>
 
   <script>
+    const rules = [
+      { condition: "utilisateur = 'ilyes'", action: "🔓 Accès IA22 confirmé." },
+      { condition: "sécurité = 'active'", action: "🔐 Modules IA verrouillés." },
+      { condition: "mode = 'diagnostic'", action: "🧪 Diagnostic IA en cours." }
+    ];
+
     function interpreterIA() {
       const input = document.getElementById("inputIA").value.toLowerCase();
-      let réponse = "🧠 IA22ZERO analyse la logique...\n";
-
-      if (input.includes("ilyes") && input.includes("if") && input.includes("then")) {
-        réponse += "✅ Identité confirmée. Accès IA autorisé.";
-      } else if (input.includes("if") && input.includes("then")) {
-        réponse += "⚙️ Structure logique détectée. IA en cours d'exécution.";
-      } else {
-        réponse += "❌ Syntaxe incorrecte. Format attendu : if condition then action.";
-      }
-
+      let réponse = "🔎 Analyse IA...\n";
+      const rule = rules.find(rule => input.includes(rule.condition.toLowerCase()));
+      réponse += rule ? `✅ Condition détectée\n🧠 Action IA : ${rule.action}` : "⚠️ Aucune règle IA correspondante.";
       document.getElementById("output").innerText = réponse;
     }
   </script>
