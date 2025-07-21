@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <title>IA22 – Lancement Projet Cognitif</title>
+  <title>IA22LANCERCONSOLE – Système Cognitif</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     body {
@@ -18,7 +18,7 @@
       padding: 20px;
       box-shadow: 0 2px 6px rgba(0,0,0,0.5);
     }
-    header h1 {
+    h1 {
       margin: 0;
       font-size: 2em;
     }
@@ -59,30 +59,32 @@
 <body>
 
   <header>
-    <h1>IA22ZERO()</h1>
-    <p>🎯 Console Cognitive – Lancement IA22 Visionnaire</p>
+    <h1>IA22LANCERCONSOLE()</h1>
+    <p>🎯 Console Cognitive – Projet IA22 Visionnaire</p>
   </header>
 
   <main>
-    <h2>🧠 Entrée IA :</h2>
-    <textarea id="inputIA" placeholder="Ex : utilisateur = 'ilyes' → lancement IA22ZERO"></textarea>
+    <h2>🧠 Commande IA :</h2>
+    <textarea id="inputIA" placeholder="Ex : utilisateur = 'ilyes' → lancement IA"></textarea>
     <button onclick="lancerIA()">Lancer IA</button>
-    <div id="output">🚀 En attente de lancement IA...</div>
+    <div id="output">🚀 En attente de commande IA...</div>
   </main>
 
   <script>
     const règlesIA = [
-      { condition: "utilisateur = 'ilyes'", action: "🔓 Identité IA reconnue. Initialisation du système IA22ZERO." },
+      { condition: "utilisateur = 'ilyes'", action: "🔓 Identité IA reconnue. Initialisation IA22ZERO." },
       { condition: "projet = 'visionnaire'", action: "🌐 Lancement du dashboard IA22_LOGIC_VISIONNAIRE." },
-      { condition: "sécurité = 'active'", action: "🔐 Verrouillage des modules IA sensibles." },
+      { condition: "sécurité = 'active'", action: "🔐 Modules IA verrouillés." },
       { condition: "système = 'lancer'", action: "⚙️ Compilation cognitive IA en cours..." }
     ];
 
     function lancerIA() {
       const entrée = document.getElementById("inputIA").value.toLowerCase();
-      let réponse = "🧠 IA22 analyse la commande...\n";
+      let réponse = "🧠 Analyse IA22...\n";
       const règle = règlesIA.find(r => entrée.includes(r.condition.toLowerCase()));
-      réponse += règle ? `✅ Action IA : ${règle.action}` : "❌ Aucun lancement IA reconnu. Syntaxe attendue : utilisateur = 'nom' → lancement IA.";
+      réponse += règle
+        ? `✅ Action IA détectée : ${règle.action}`
+        : "❌ Aucune commande IA reconnue. Format attendu : utilisateur = 'nom' → lancement IA.";
       document.getElementById("output").innerText = réponse;
     }
   </script>
