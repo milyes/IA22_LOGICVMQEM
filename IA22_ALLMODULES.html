@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>IA22 – Station Cognitive Complète</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      background-color: #0f1118;
+      color: #ffffff;
+      font-family: "Segoe UI", sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #1a1d23;
+      text-align: center;
+      padding: 20px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+    }
+    h1 { margin: 0; font-size: 2em; }
+    nav {
+      background-color: #141720;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 10px;
+      gap: 10px;
+      border-bottom: 1px solid #222;
+    }
+    nav button {
+      background-color: #ffbb00;
+      color: #111;
+      border: none;
+      padding: 10px 16px;
+      font-weight: bold;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    main {
+      padding: 30px;
+    }
+    textarea {
+      width: 100%;
+      height: 100px;
+      padding: 12px;
+      font-size: 1em;
+      background-color: #1f222a;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-family: monospace;
+    }
+    button.launch {
+      margin-top: 10px;
+      padding: 12px 24px;
+      background-color: #44c767;
+      color: #fff;
+      font-weight: bold;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    #output {
+      margin-top: 20px;
+      padding: 20px;
+      background-color: #191c23;
+      border-radius: 6px;
+      box-shadow: inset 0 0 4px #000;
+      white-space: pre-line;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>IA22_LOGIC_VISIONNAIRE</h1>
+    <p>🧠 Station Cognitif Multi-Module</p>
+  </header>
+
+  <nav>
+    <button onclick="activerModule('IA22ZERO')">IA22ZERO</button>
+    <button onclick="activerModule('SECURITE')">SECURITÉ</button>
+    <button onclick="activerModule('PERCEPTION')">PERCEPTION</button>
+    <button onclick="activerModule('DIAGNOSTIC')">DIAGNOSTIC</button>
+    <button onclick="activerModule('ADMIN')">ADMIN</button>
+    <button onclick="activerModule('LANCER')">LANCER</button>
+  </nav>
+
+  <main>
+    <h2>🧠 Entrée cognitive :</h2>
+    <textarea id="inputIA" placeholder="Ex : utilisateur = 'ilyes' → lancement IA"></textarea>
+    <button class="launch" onclick="interpreterIA()">Lancer IA</button>
+    <div id="output">🚀 En attente de commande IA...</div>
+  </main>
+
+  <script>
+    const modules = {
+      IA22ZERO: "🔓 Initialisation de IA22ZERO.",
+      SECURITE: "🔐 Module de sécurité activé.",
+      PERCEPTION: "🧠 Analyse sémantique IA en cours.",
+      DIAGNOSTIC: "🧪 Test cognitif et état du système.",
+      ADMIN: "🔧 Accès au panneau administrateur IA.",
+      LANCER: "⚙️ Démarrage global du projet IA22."
+    };
+
+    const règlesIA = [
+      { condition: "utilisateur = 'ilyes'", action: "✅ Identité confirmée. Accès autorisé." },
+      { condition: "projet = 'visionnaire'", action: modules.LANCER },
+      { condition: "sécurité = 'active'", action: modules.SECURITE },
+      { condition: "système = 'lancer'", action: modules.IA22ZERO },
+      { condition: "admin = 'true'", action: modules.ADMIN }
+    ];
+
+    function activerModule(module) {
+      const réponse = "🚀 Module déclenché : " + (modules[module] || "Module inconnu.");
+      document.getElementById("output").innerText = réponse;
+    }
+
+    function interpreterIA() {
+      const entrée = document.getElementById("inputIA").value.toLowerCase();
+      let réponse = "🧠 Analyse IA22...\n";
+      const règle = règlesIA.find(r => entrée.includes(r.condition.toLowerCase()));
+      réponse += règle
+        ? `✅ Action IA : ${règle.action}`
+        : "❌ Aucune règle IA reconnue. Format attendu : utilisateur = 'nom' → lancement IA.";
+      document.getElementById("output").innerText = réponse;
+    }
+  </script>
+
+</body>
+</html>
