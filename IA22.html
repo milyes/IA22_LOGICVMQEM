@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="refresh" content="6;url=https://milyes.github.io/IA22_LOGICVMQEM/" />
+  <title>IA22 – Console Visionnaire Autonome</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      background-color: #0f1118;
+      color: #ffffff;
+      font-family: "Segoe UI", sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #1a1d23;
+      text-align: center;
+      padding: 20px;
+      border-bottom: 2px solid #ffbb00;
+    }
+    h1 { margin: 0; font-size: 2em; }
+    h2 { margin-top: 6px; font-size: 1em; font-weight: normal; color: #bbb; }
+    main { padding: 30px; text-align: center; }
+    textarea {
+      width: 100%; max-width: 600px; height: 100px;
+      background-color: #1f222a; color: #fff;
+      border: none; border-radius: 6px;
+      padding: 12px; font-family: monospace;
+      font-size: 1em; resize: vertical;
+    }
+    button {
+      margin-top: 12px; padding: 12px 24px;
+      background-color: #ffbb00; color: #111;
+      font-weight: bold; border: none;
+      border-radius: 6px; cursor: pointer;
+    }
+    #outputIA {
+      margin-top: 20px;
+      background-color: #191c23; padding: 20px;
+      border-radius: 6px; font-family: monospace;
+      box-shadow: inset 0 0 4px #000;
+      white-space: pre-line;
+      max-width: 600px; margin-left: auto; margin-right: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>IA22 – LOGIC & ALGORITHM INTELLIGENT</h1>
+    <h2>🎓 Console IA officielle | Inventeur : Zoubirou Ilyes</h2>
+  </header>
+
+  <main>
+    <textarea id="inputIA" placeholder="Tape ta commande IA ici..."></textarea><br>
+    <button onclick="lancerIA()">🚀 Compiler IA</button>
+    <div id="outputIA">🧠 En attente d'une commande IA...</div>
+    <p style="margin-top:20px;color:#aaa;">
+      ⏳ Redirection automatique vers ton station IA dans 6 secondes...
+    </p>
+  </main>
+
+  <script>
+    const reglesIA = [
+      { condition: "utilisateur = 'ilyes'", action: "✅ Identité confirmée. Système IA22 activé." },
+      { condition: "technologie = 'nouvelle'", action: "🛠️ Module IA Futur lancé. Préparation cognitive enclenchée." },
+      { condition: "innovation = 'active'", action: "⚡ Fusion IA Web + Python + C activée." },
+      { condition: "projet = 'visionnaire'", action: "🔮 IA22 entre en projection stratégique évolutive." },
+      { condition: "système = 'compiler'", action: "🧬 Compilation complète IA22 en cours..." }
+    ];
+
+    function lancerIA() {
+      const entrée = document.getElementById("inputIA").value.toLowerCase();
+      const sortie = document.getElementById("outputIA");
+      sortie.innerText = "🔍 IA analyse ta commande...\n";
+
+      const règle = reglesIA.find(r => entrée.includes(r.condition.toLowerCase()));
+      sortie.innerText += règle
+        ? `🔷 ${règle.action}`
+        : "❌ Commande non reconnue. Essaie : utilisateur = 'ilyes'";
+    }
+  </script>
+
+</body>
+</html>
