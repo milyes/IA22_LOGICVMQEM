@@ -142,23 +142,6 @@
         © 2025 – Zoubirou Mohammed Ilyes | ORCID : <a href="https://orcid.org/0009-0007-7571-3178">0009-0007-7571-3178</a>
     </footer>
 
-    <script>
-        function runIA() {
-            const input = document.getElementById('inputIA').value;
-            const result = document.getElementById('resultIA');
-
-            if (!input.trim()) {
-                result.textContent = "⚠️ Veuillez saisir une commande IA.";
-                return;
-            }
-
-            result.textContent = "🔄 Analyse IA en cours...";
-
-            setTimeout(() => {
-                result.textContent = `✅ Résultat IA : "${input.toUpperCase()}" exécuté avec succès.`;
-            }, 1500);
-        }
-    </script>
-    
+    <script src="ai_interaction.js"></script>
 </body>
 </html>
