@@ -1,97 +1,107 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IA22 Web Console</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background-color: #0c0c0c;
-            font-family: monospace;
-            color: #00ffaa;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-        .container {
-            text-align: center;
-            padding: 20px;
-        }
-        h1 {
-            font-size: 3em;
-            margin-bottom: 10px;
-        }
-        .slogan {
-            font-size: 1.2em;
-            margin-bottom: 30px;
-        }
-        .promo img {
-            max-width: 100%;
-            height: auto;
-            margin-bottom: 30px;
-            border: 2px solid #00ffaa;
-            border-radius: 12px;
-        }
-        .download-section {
-            margin-bottom: 30px;
-        }
-        .button {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: #00ffaa;
-            color: #0c0c0c;
-            text-decoration: none;
-            font-weight: bold;
-            border-radius: 8px;
-            margin-bottom: 20px;
-        }
-        .button:hover {
-            background-color: #0c0c0c;
-            color: #00ffaa;
-            border: 1px solid #00ffaa;
-        }
-        .qr {
-            width: 200px;
-            margin-top: 10px;
-            border: 1px solid #00ffaa;
-            padding: 5px;
-            border-radius: 8px;
-        }
-        .signature {
-            font-size: 0.9em;
-            margin-top: 40px;
-            color: #888;
-        }
-        .signature a {
-            color: #00ffaa;
-            text-decoration: none;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <title>IA22_LOGIC_VISIONNAIRE – Dashboard Console</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      margin: 0;
+      background-color: #0f1118;
+      font-family: "Segoe UI", sans-serif;
+      color: #ffffff;
+    }
+    header {
+      background-color: #1a1d23;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+    }
+    h1 {
+      margin: 0;
+      font-size: 2em;
+    }
+    nav {
+      display: flex;
+      justify-content: space-around;
+      background-color: #141720;
+      padding: 12px;
+      border-bottom: 1px solid #222;
+    }
+    nav button {
+      background-color: #ffbb00;
+      color: #111;
+      border: none;
+      padding: 10px 20px;
+      font-weight: bold;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    main {
+      padding: 30px;
+    }
+    textarea {
+      width: 100%;
+      height: 100px;
+      background-color: #1f222a;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-size: 1em;
+      padding: 12px;
+      font-family: monospace;
+    }
+    .output {
+      margin-top: 20px;
+      background-color: #191c23;
+      padding: 20px;
+      border-radius: 6px;
+      box-shadow: inset 0 0 4px #000;
+      white-space: pre-line;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>IA22 Web Console</h1>
-        <p class="slogan">Signed Intelligence. Projected Vision.</p>
-        
-        <div class="promo">
-            <img src="assets/IA22Promo.png" alt="IA22 Promo Visuel">
-        </div>
 
-        <div class="download-section">
-            <h2>Téléchargement Officiel</h2>
-            <a href="https://milyes.github.io/IA22WebConsole/IA22_FINAL.zip" class="button">📥 Télécharger IA22_FINAL.zip</a>
-            <p>Scan ou clique :</p>
-            <a href="https://milyes.github.io/IA22WebConsole/IA22_FINAL.zip">
-                <img src="assets/QRIA22Download.png" alt="QR Code IA22 Download" class="qr">
-            </a>
-        </div>
+  <header>
+    <h1>IA22_LOGIC_VISIONNAIRE</h1>
+    <p>🧠 Dashboard Console – Lancement projet IA WebView</p>
+  </header>
 
-        <div class="signature">
-            <p>Projet signé : <strong>Z. M. Ilyes</strong> · ORCID : <a href="https://orcid.org/0009-0007-7571-3178" target="_blank">0009-0007-7571-3178</a></p>
-        </div>
-    </div>
+  <nav>
+    <button onclick="lancerProjet('ZERO')">Lancer IA22ZERO</button>
+    <button onclick="lancerProjet('SECURITY')">Lancer MODULE_SECURITE</button>
+    <button onclick="lancerProjet('PERCEPTION')">Lancer IA_PERCEPTION</button>
+    <button onclick="lancerProjet('ADMIN')">Accès ADMIN</button>
+  </nav>
+
+  <main>
+    <h2>🧠 Entrée cognitive :</h2>
+    <textarea id="inputIA" placeholder="Ex : utilisateur = 'ilyes' → lancement IA"></textarea>
+    <button onclick="lancerAnalyse()">Interpréter IA</button>
+    <div class="output" id="output">🧪 Prêt à analyser la commande IA...</div>
+  </main>
+
+  <script>
+    function lancerProjet(module) {
+      let msg = "🚀 Initialisation du module : " + module;
+      if (module === "ADMIN") msg += "\n🔐 Accès administrateur requis.";
+      document.getElementById("output").innerText = msg;
+    }
+
+    function lancerAnalyse() {
+      const input = document.getElementById("inputIA").value.toLowerCase();
+      let réponse = "🔍 IA22_LOGIC_VISIONNAIRE analyse...\n";
+      if (input.includes("ilyes") && input.includes("lancement")) {
+        réponse += "✅ Accès confirmé. Lancement IA en cours...";
+      } else if (input.includes("projet") || input.includes("module")) {
+        réponse += "⚙️ Structure logique détectée. Initialisation IA...";
+      } else {
+        réponse += "⚠️ Syntaxe non valide. Utilise : utilisateur = 'nom' → lancement IA.";
+      }
+      document.getElementById("output").innerText = réponse;
+    }
+  </script>
+
 </body>
 </html>
