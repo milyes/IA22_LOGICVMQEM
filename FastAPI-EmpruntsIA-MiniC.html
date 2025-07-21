@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>IA22 Web Console</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #0c0c0c;
+            font-family: monospace;
+            color: #00ffaa;
+            overflow: hidden;
+        }
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+        .container {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            min-height: 100vh;
+            text-align: center;
+            padding: 20px;
+        }
+        h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            color: #00ffaa;
+            text-shadow: 0 0 8px #00ffaa;
+        }
+        .slogan {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            color: #00ffaa;
+            text-shadow: 0 0 5px #00ffaa;
+        }
+        .promo img {
+            max-width: 90%;
+            height: auto;
+            margin-bottom: 30px;
+            border: 2px solid #00ffaa;
+            border-radius: 12px;
+            box-shadow: 0 0 10px #00ffaa;
+        }
+        .download-section {
+            margin-bottom: 30px;
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #00ffaa;
+            color: #0c0c0c;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 0 10px #00ffaa;
+        }
+        .button:hover {
+            background-color: #0c0c0c;
+            color: #00ffaa;
+            border: 1px solid #00ffaa;
+        }
+        .qr {
+            width: 200px;
+            margin-top: 10px;
+            border: 1px solid #00ffaa;
+            padding: 5px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px #00ffaa;
+        }
+        .signature {
+            font-size: 0.9em;
+            margin-top: 40px;
+            color: #888;
+        }
+        .signature a {
+            color: #00ffaa;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+<canvas id="particles"></canvas>
+<div class="container">
+    <h1>IA22 Web Console</h1>
+    <p class="slogan">Signed Intelligence. Projected Vision.</p>
+
+    <div class="promo">
+        <img src="assets/IA22Promo.png" alt="IA22 Promo Visuel">
+    </div>
+
+    <div class="download-section">
+        <h2>Téléchargement Officiel</h2>
+        <a href="https://milyes.github.io/IA22WebConsole/IA22_FINAL.zip" class="button">📥 Télécharger IA22_FINAL.zip</a>
+        <p>Scan ou clique :</p>
+        <a href="https://milyes.github.io/IA22WebConsole/IA22_FINAL.zip">
+            <img src="assets/QRIA22Download.png" alt="QR Code IA22 Download" class="qr">
+        </a>
+    </div>
+
+    <div class="signature">
+        <p>Projet signé : <strong>Z. M. Ilyes</strong> · ORCID : <a href="https://orcid.org/0009-0007-7571-3178" target="_blank">0009-0007-7571-3178</a></p>
+    </div>
+</div>
+
+<script>
+    const canvas = document.getElementById('particles');
+    const ctx = canvas.getContext('2d');
+    let width, height;
+    const particles = [];
+
+    function resizeCanvas() {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    for (let i = 0; i < 80; i++) {
+        particles.push({
+            x: Math.random() * width,
+            y: Math.random() * height,
+            vx: (Math.random() - 0.5) * 0.5,
+            vy: (Math.random() - 0.5) * 0.5,
+            radius: Math.random() * 2 + 1
+        });
+    }
+
+    function draw() {
+        ctx.fillStyle = '#0c0c0c';
+        ctx.fillRect(0, 0, width, height);
+
+        ctx.fillStyle = '#00ffaa';
+        ctx.shadowBlur = 5;
+        ctx.shadowColor = '#00ffaa';
+        particles.forEach(p => {
+            p.x += p.vx;
+            p.y += p.vy;
+            if (p.x < 0 || p.x > width) p.vx *= -1;
+            if (p.y < 0 || p.y > height) p.vy *= -1;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+            ctx.fill();
+        });
+        requestAnimationFrame(draw);
+    }
+
+    draw();
+</script>
+</body>
+</html>
