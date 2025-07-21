@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>IA22 – Lancement Projet Cognitif</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      background-color: #0f1118;
+      color: #ffffff;
+      font-family: "Segoe UI", sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #1a1d23;
+      text-align: center;
+      padding: 20px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2em;
+    }
+    main {
+      padding: 30px;
+    }
+    textarea {
+      width: 100%;
+      height: 120px;
+      padding: 12px;
+      font-size: 1em;
+      background-color: #1f222a;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-family: monospace;
+    }
+    button {
+      margin-top: 10px;
+      padding: 12px 24px;
+      background-color: #ffbb00;
+      color: #111;
+      font-weight: bold;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    #output {
+      margin-top: 20px;
+      padding: 20px;
+      background-color: #191c23;
+      border-radius: 6px;
+      box-shadow: inset 0 0 4px #000;
+      white-space: pre-line;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>IA22ZERO()</h1>
+    <p>🎯 Console Cognitive – Lancement IA22 Visionnaire</p>
+  </header>
+
+  <main>
+    <h2>🧠 Entrée IA :</h2>
+    <textarea id="inputIA" placeholder="Ex : utilisateur = 'ilyes' → lancement IA22ZERO"></textarea>
+    <button onclick="lancerIA()">Lancer IA</button>
+    <div id="output">🚀 En attente de lancement IA...</div>
+  </main>
+
+  <script>
+    const règlesIA = [
+      { condition: "utilisateur = 'ilyes'", action: "🔓 Identité IA reconnue. Initialisation du système IA22ZERO." },
+      { condition: "projet = 'visionnaire'", action: "🌐 Lancement du dashboard IA22_LOGIC_VISIONNAIRE." },
+      { condition: "sécurité = 'active'", action: "🔐 Verrouillage des modules IA sensibles." },
+      { condition: "système = 'lancer'", action: "⚙️ Compilation cognitive IA en cours..." }
+    ];
+
+    function lancerIA() {
+      const entrée = document.getElementById("inputIA").value.toLowerCase();
+      let réponse = "🧠 IA22 analyse la commande...\n";
+      const règle = règlesIA.find(r => entrée.includes(r.condition.toLowerCase()));
+      réponse += règle ? `✅ Action IA : ${règle.action}` : "❌ Aucun lancement IA reconnu. Syntaxe attendue : utilisateur = 'nom' → lancement IA.";
+      document.getElementById("output").innerText = réponse;
+    }
+  </script>
+
+</body>
+</html>
