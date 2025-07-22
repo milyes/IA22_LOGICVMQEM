@@ -1,167 +1,95 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <title>NetSecure Pro IA - Tableau de bord</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background-color: #0f1117;
-      color: #e0e0e0;
-    }
+    <meta charset="UTF-8">
+    <title>IA22 Hybrid Bloc - Terminal Action</title>
+    <style>
+        body {
+            background-color: #0b0b0b;
+            color: #00ff88;
+            font-family: monospace;
+            padding: 20px;
+        }
 
-    header {
-      background-color: #181b23;
-      padding: 20px;
-      text-align: center;
-    }
+        .ia-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #000;
+            border: 2px solid #00ff88;
+            padding: 20px;
+            border-radius: 8px;
+        }
 
-    header h1 {
-      margin: 0;
-      font-size: 24px;
-      color: #4caf50;
-    }
+        .terminal {
+            background-color: #111;
+            padding: 15px;
+            border: 1px dashed #00ff88;
+            white-space: pre-wrap;
+            height: 200px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+        }
 
-    header p {
-      margin: 5px 0 0;
-      color: #aaa;
-    }
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
 
-    main {
-      max-width: 900px;
-      margin: 20px auto;
-      padding: 20px;
-      background-color: #181b23;
-      border-radius: 10px;
-    }
+        button {
+            flex: 1;
+            background-color: #222;
+            color: #00ff88;
+            border: 1px solid #00ff88;
+            padding: 10px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
 
-    section {
-      margin-bottom: 30px;
-    }
-
-    h2 {
-      color: #4caf50;
-      margin-bottom: 10px;
-    }
-
-    #status ul {
-      list-style: none;
-      padding: 0;
-    }
-
-    #status li {
-      margin: 5px 0;
-    }
-
-    #inputIA {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 10px;
-      border-radius: 5px;
-      background-color: #1c1f26;
-      color: #fff;
-      border: 1px solid #333;
-    }
-
-    button {
-      width: 100%;
-      padding: 10px;
-      background-color: #4caf50;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      margin-bottom: 10px;
-    }
-
-    #resultIA, #module-cards {
-      background-color: #1c1f26;
-      padding: 10px;
-      border-radius: 5px;
-      margin-top: 10px;
-    }
-
-    #module-cards > div {
-      margin-bottom: 10px;
-      background-color: #2b2f3a;
-      padding: 10px;
-      border-radius: 5px;
-    }
-
-    footer {
-      text-align: center;
-      padding: 10px;
-      color: #777;
-      font-size: 12px;
-    }
-  </style>
+        button:hover {
+            background-color: #00ff88;
+            color: #000;
+        }
+    </style>
 </head>
 <body>
 
-<header>
-  <h1>🔒 NetSecure Pro IA</h1>
-  <p>Plateforme IA multi-origines pour la sécurité réseau</p>
-</header>
+<div class="ia-container">
+    <h2>IA22_LOGIC HYBRIDE</h2>
+    <div class="terminal" id="terminal-output">
+        [Système IA22 prêt] ...
+    </div>
 
-<main>
-  <section id="status">
-    <h2>📡 État du réseau</h2>
-    <ul>
-      <li>Appareils connectés : <span id="deviceCount">--</span></li>
-      <li>Menaces détectées : <span id="threatCount">--</span></li>
-      <li>Origine IA : <span id="activeOrigin">--</span></li>
-    </ul>
-  </section>
-
-  <section id="ia-tools">
-    <h2>🧠 Interaction IA</h2>
-    <input id="inputIA" type="text" placeholder="Entrer une logique à tester...">
-    <button onclick="runIA()">Lancer l'IA</button>
-    <div id="resultIA">...</div>
-  </section>
-
-  <section id="modules">
-    <h2>📦 Modules IA chargés</h2>
-    <div id="module-cards"></div>
-  </section>
-</main>
-
-<footer>
-  &copy; 2025 NetSecure Pro IA - milyes@netsecurepro.ca
-</footer>
+    <div class="button-group">
+        <button onclick="executeAction('Analyse sécurité')">Analyse IA</button>
+        <button onclick="executeAction('Lancement Emprunt')">Lancer Emprunt</button>
+        <button onclick="executeAction('Afficher Logs')">Afficher Logs</button>
+    </div>
+</div>
 
 <script>
-  async function runIA() {
-    const input = document.getElementById("inputIA").value;
-    const result = document.getElementById("resultIA");
-    result.innerHTML = "🧠 Réponse IA en cours...";
-    setTimeout(() => {
-      result.innerHTML = "✅ IA a analysé votre logique : '" + input + "'";
-    }, 1500);
-  }
+    function executeAction(action) {
+        const terminal = document.getElementById('terminal-output');
+        let output = '';
 
-  fetch("logic_data/netsecure_ai_modules.json")
-    .then(response => response.json())
-    .then(data => {
-      const container = document.getElementById("module-cards");
-      data.forEach(mod => {
-        const card = document.createElement("div");
-        card.innerHTML = `<strong>${mod.name}</strong><br>${mod.description}<br>Status: <em>${mod.status}</em>`;
-        container.appendChild(card);
-      });
-    });
+        switch (action) {
+            case 'Analyse sécurité':
+                output = '✅ IA22 : Analyse de sécurité terminée.';
+                break;
+            case 'Lancement Emprunt':
+                output = '🔄 IA22 : Emprunt lancé avec succès.';
+                break;
+            case 'Afficher Logs':
+                output = '📄 IA22 : Aucune anomalie détectée.';
+                break;
+            default:
+                output = '❓ IA22 : Action inconnue.';
+        }
+
+        terminal.innerText += `\n[IA22_LOGIC] ${output}`;
+        terminal.scrollTop = terminal.scrollHeight;
+    }
 </script>
-<div style="background:#1c1f26;padding:15px;border-radius:8px;margin-bottom:15px;">
-    <h3 style="color:#4caf50;margin:0 0 10px;">🛡️ Module IA - Détection d'anomalies</h3>
-    <p style="color:#ccc;margin:0 0 10px;">
-        Surveille en temps réel les flux réseau et signale toute activité suspecte.
-    </p>
-    <button style="padding:10px;width:100%;border:none;border-radius:5px;background:#4caf50;color:white;cursor:pointer;"
-            onclick="alert('✅ Module IA lancé : Analyse en cours...')">
-        🚀 Lancer l'analyse IA
-    </button>
-</div>
+
 </body>
 </html>
