@@ -2,68 +2,65 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>IA22_COOPKIT_LOGIC</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IA22 COOPKIT LOGIC</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background: #121212;
-            color: #00ffcc;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
+            background-color: #0a0a0a;
+            color: #00ff88;
+            font-family: monospace;
             margin: 0;
+            padding: 20px;
         }
         h1 {
-            color: #00ffcc;
-            font-size: 2em;
-            margin-bottom: 20px;
+            text-align: center;
+            color: #00ff88;
+        }
+        .console {
+            background-color: #111;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px #00ff88;
+            min-height: 200px;
+            margin-top: 20px;
+            white-space: pre-wrap;
         }
         button {
-            background-color: #00ffcc;
-            color: #121212;
+            background-color: #00ff88;
+            color: #0a0a0a;
+            padding: 10px 20px;
             border: none;
-            padding: 15px 30px;
-            font-size: 1em;
-            border-radius: 10px;
+            font-weight: bold;
+            border-radius: 4px;
             cursor: pointer;
-            transition: 0.3s;
+            margin-top: 20px;
         }
         button:hover {
-            background-color: #00e6b3;
-        }
-        .result {
-            margin-top: 20px;
-            font-size: 1.2em;
-            color: #00ffcc;
+            background-color: #00cc66;
         }
     </style>
 </head>
 <body>
 
-    <h1>IA22 - Lancement Logiciel Coopératif</h1>
+    <h1>IA22 - COOPKIT LOGIC</h1>
 
-    <button onclick="lancerIA()">Lancer IA CoopKit</button>
+    <div class="console" id="consoleOutput">
+        [IA] En attente de commande...
+    </div>
 
-    <div class="result" id="resultat"></div>
+    <button onclick="runIA()">Lancer IA Coopkit</button>
 
     <script>
-        function lancerIA() {
-            const modules = [
-                "Analyse sécurisée du réseau",
-                "Évaluation des vulnérabilités",
-                "Optimisation IA des processus",
-                "Détection proactive des menaces",
-                "Support décisionnel IA"
-            ];
-            let output = "Modules IA CoopKit en cours d'activation :<br><ul>";
-            modules.forEach(module => {
-                output += `<li>${module}</li>`;
-            });
-            output += "</ul><br>✅ IA22 CoopKit Fonctionnel & Prêt à l’emploi.";
-            document.getElementById('resultat').innerHTML = output;
+        function runIA() {
+            const output = document.getElementById('consoleOutput');
+            output.innerText += '\n[IA] Analyse des modules CoopKit...';
+            setTimeout(() => {
+                output.innerText += '\n[IA] Modules chargés : SÉCURITÉ | OPTIMISATION | DÉTECTION | IA_LOGIC.';
+                output.innerText += '\n[IA] Lancement du moteur IA22...';
+            }, 1000);
+            setTimeout(() => {
+                output.innerText += '\n[IA] Coopération IA : ACTIVE ✅';
+            }, 2000);
         }
     </script>
 
