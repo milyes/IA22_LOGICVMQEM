@@ -2,61 +2,99 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>NetSecure Pro IA - Modules & Analyse</title>
+  <title>NetSecure Pro IA - Tableau de bord</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background-color: #10131a;
-      color: #f0f0f0;
-      padding: 20px;
       margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #0f1117;
+      color: #e0e0e0;
     }
 
-    header, footer {
+    header {
+      background-color: #181b23;
+      padding: 20px;
       text-align: center;
-      margin-bottom: 20px;
     }
 
-    h1 {
-      margin-bottom: 5px;
+    header h1 {
+      margin: 0;
+      font-size: 24px;
+      color: #4caf50;
     }
 
-    input, button {
-      padding: 10px;
-      margin: 5px 0;
-      width: 100%;
-      box-sizing: border-box;
-      border-radius: 5px;
-      border: none;
+    header p {
+      margin: 5px 0 0;
+      color: #aaa;
     }
 
-    button {
-      background-color: #2b2f3a;
-      color: white;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background-color: #3c4254;
-    }
-
-    #module-cards > div {
-      background: #1c1f26;
-      padding: 15px;
+    main {
+      max-width: 900px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: #181b23;
       border-radius: 10px;
+    }
+
+    section {
+      margin-bottom: 30px;
+    }
+
+    h2 {
+      color: #4caf50;
       margin-bottom: 10px;
     }
 
-    pre {
-      background-color: #181c27;
-      padding: 15px;
-      border-radius: 8px;
-      white-space: pre-wrap;
+    #status ul {
+      list-style: none;
+      padding: 0;
     }
 
-    #resultIA {
+    #status li {
+      margin: 5px 0;
+    }
+
+    #inputIA {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      background-color: #1c1f26;
+      color: #fff;
+      border: 1px solid #333;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-bottom: 10px;
+    }
+
+    #resultIA, #module-cards {
+      background-color: #1c1f26;
+      padding: 10px;
+      border-radius: 5px;
       margin-top: 10px;
+    }
+
+    #module-cards > div {
+      margin-bottom: 10px;
+      background-color: #2b2f3a;
+      padding: 10px;
+      border-radius: 5px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 10px;
+      color: #777;
+      font-size: 12px;
     }
   </style>
 </head>
@@ -64,23 +102,34 @@
 
 <header>
   <h1>🔒 NetSecure Pro IA</h1>
-  <p>Interaction IA et chargement dynamique des modules</p>
+  <p>Plateforme IA multi-origines pour la sécurité réseau</p>
 </header>
 
-<section>
-  <h2>🧠 Tester une logique IA</h2>
-  <input type="text" id="inputIA" placeholder="Écris ici une logique à tester...">
-  <button onclick="runIA()">Lancer l'analyse IA</button>
-  <div id="resultIA">...</div>
-</section>
+<main>
+  <section id="status">
+    <h2>📡 État du réseau</h2>
+    <ul>
+      <li>Appareils connectés : <span id="deviceCount">--</span></li>
+      <li>Menaces détectées : <span id="threatCount">--</span></li>
+      <li>Origine IA : <span id="activeOrigin">--</span></li>
+    </ul>
+  </section>
 
-<section>
-  <h2>📦 Modules IA chargés</h2>
-  <div id="module-cards"></div>
-</section>
+  <section id="ia-tools">
+    <h2>🧠 Interaction IA</h2>
+    <input id="inputIA" type="text" placeholder="Entrer une logique à tester...">
+    <button onclick="runIA()">Lancer l'IA</button>
+    <div id="resultIA">...</div>
+  </section>
+
+  <section id="modules">
+    <h2>📦 Modules IA chargés</h2>
+    <div id="module-cards"></div>
+  </section>
+</main>
 
 <footer>
-  <p>&copy; 2025 NetSecure Pro IA - milyes@netsecurepro.ca</p>
+  &copy; 2025 NetSecure Pro IA - milyes@netsecurepro.ca
 </footer>
 
 <script>
@@ -99,11 +148,7 @@
       const container = document.getElementById("module-cards");
       data.forEach(mod => {
         const card = document.createElement("div");
-        card.innerHTML = `
-          <h3>${mod.name}</h3>
-          <p>${mod.description}</p>
-          <p>Status : ${mod.status}</p>
-        `;
+        card.innerHTML = `<strong>${mod.name}</strong><br>${mod.description}<br>Status: <em>${mod.status}</em>`;
         container.appendChild(card);
       });
     });
