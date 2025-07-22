@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>NetSecure Pro IA - Tableau de bord</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+  <header>
+    <h1>🔒 NetSecure Pro IA</h1>
+    <p>Plateforme IA multi-origines pour la sécurité réseau</p>
+  </header>
+
+  <section id="status">
+    <h2>📡 État du réseau</h2>
+    <ul>
+      <li>Appareils connectés : <span id="deviceCount">--</span></li>
+      <li>Menaces détectées : <span id="threatCount">--</span></li>
+      <li>Origine IA : <span id="activeOrigin">--</span></li>
+    </ul>
+  </section>
+
+  <section id="actions">
+    <h2>🧠 Analyses IA</h2>
+    <button onclick="fetchSentiment()">Analyse de trafic</button>
+    <button onclick="fetchSummary()">Résumé rapport</button>
+    <button onclick="fetchRecommendations()">Recommandations IA</button>
+  </section>
+
+  <section id="output">
+    <h2>📄 Résultat</h2>
+    <pre id="resultBox">...</pre>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 NetSecure Pro IA - milyes@netsecurepro.ca</p>
+  </footer>
+
+  <script>
+    async function fetchSentiment() {
+      const res = await fetch("/api/ai/sentiment", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text: "Exemple de trafic à analyser..." })
+      });
+      const data = await res.json();
+      document.getElementById("resultBox").textContent = JSON.stringify(data, null, 2);
+    }
+
+    async function fetchSummary() {
+      const res = await fetch("/api/ai/summary", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text: "Rapport brut à résumer..." })
+      });
+      const data = await res.json();
+      document.getElementById("resultBox").textContent = JSON.stringify(data, null, 2);
+    }
+
+    async function fetchRecommendations() {
+      const res = await fetch("/api/ai/recommendations", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ context: "État réseau actuel" })
+      });
+      const data = await res.json();
+      document.getElementById("resultBox").textContent = JSON.stringify(data, null, 2);
+    }
+  </script>
+</body>
+</html
