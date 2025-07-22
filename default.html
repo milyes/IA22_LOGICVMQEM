@@ -3,8 +3,62 @@
 <head>
   <meta charset="UTF-8">
   <title>NetSecure Pro IA - Tableau de bord</title>
-  <link rel="stylesheet" href="/static/style.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #10131a;
+      color: #f0f0f0;
+      padding: 20px;
+      margin: 0;
+    }
+
+    header, footer {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      margin-bottom: 5px;
+    }
+
+    button {
+      padding: 10px 20px;
+      margin: 5px;
+      background-color: #2b2f3a;
+      border: none;
+      color: #fff;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background-color 0.2s;
+    }
+
+    button:hover {
+      background-color: #3c4254;
+    }
+
+    section {
+      margin-bottom: 20px;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    pre {
+      background-color: #181c27;
+      padding: 15px;
+      border-radius: 8px;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+
+    #loading {
+      color: #ffcc00;
+      margin: 10px 0;
+    }
+  </style>
 </head>
 <body>
   <header>
@@ -15,9 +69,9 @@
   <section id="status">
     <h2>📡 État du réseau</h2>
     <ul>
-      <li>Appareils connectés : <span id="deviceCount">--</span></li>
-      <li>Menaces détectées : <span id="threatCount">--</span></li>
-      <li>Origine IA : <span id="activeOrigin">--</span></li>
+      <li>Appareils connectés : <span id="deviceCount">12</span></li>
+      <li>Menaces détectées : <span id="threatCount">1</span></li>
+      <li>Origine IA : <span id="activeOrigin">AI-LocalProxy</span></li>
     </ul>
   </section>
 
@@ -28,9 +82,11 @@
     <button onclick="fetchRecommendations()">Recommandations IA</button>
   </section>
 
+  <div id="loading" style="display:none;">⏳ Analyse en cours...</div>
+
   <section id="output">
     <h2>📄 Résultat</h2>
-    <pre id="resultBox">...</pre>
+    <pre id="resultBox" aria-live="polite">...</pre>
   </section>
 
   <footer>
@@ -38,35 +94,53 @@
   </footer>
 
   <script>
+    function delay(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
     async function fetchSentiment() {
-      const res = await fetch("/api/ai/sentiment", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text: "Exemple de trafic à analyser..." })
-      });
-      const data = await res.json();
-      document.getElementById("resultBox").textContent = JSON.stringify(data, null, 2);
+      showLoading();
+      await delay(1000);
+      const fakeData = {
+        status: "OK",
+        analysis: "Aucune anomalie détectée dans le trafic réseau."
+      };
+      updateResult(fakeData);
     }
 
     async function fetchSummary() {
-      const res = await fetch("/api/ai/summary", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text: "Rapport brut à résumer..." })
-      });
-      const data = await res.json();
-      document.getElementById("resultBox").textContent = JSON.stringify(data, null, 2);
+      showLoading();
+      await delay(1000);
+      const fakeData = {
+        status: "OK",
+        summary: "Le réseau fonctionne normalement. Une seule menace mineure a été neutralisée."
+      };
+      updateResult(fakeData);
     }
 
     async function fetchRecommendations() {
-      const res = await fetch("/api/ai/recommendations", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ context: "État réseau actuel" })
-      });
-      const data = await res.json();
+      showLoading();
+      await delay(1000);
+      const fakeData = {
+        status: "OK",
+        recommendations: [
+          "Mettre à jour le pare-feu.",
+          "Vérifier les logs VPN.",
+          "Renforcer les mots de passe."
+        ]
+      };
+      updateResult(fakeData);
+    }
+
+    function showLoading() {
+      document.getElementById("loading").style.display = "block";
+      document.getElementById("resultBox").textContent = "...";
+    }
+
+    function updateResult(data) {
+      document.getElementById("loading").style.display = "none";
       document.getElementById("resultBox").textContent = JSON.stringify(data, null, 2);
     }
   </script>
 </body>
-</html
+</html>
