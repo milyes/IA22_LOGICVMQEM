@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>NetSecure Pro IA - Tableau de bord</title>
+  <title>NetSecure Pro IA - Modules & Analyse</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
@@ -22,28 +22,30 @@
       margin-bottom: 5px;
     }
 
-    button {
-      padding: 10px 20px;
-      margin: 5px;
-      background-color: #2b2f3a;
-      border: none;
-      color: #fff;
-      cursor: pointer;
+    input, button {
+      padding: 10px;
+      margin: 5px 0;
+      width: 100%;
+      box-sizing: border-box;
       border-radius: 5px;
-      transition: background-color 0.2s;
+      border: none;
+    }
+
+    button {
+      background-color: #2b2f3a;
+      color: white;
+      cursor: pointer;
     }
 
     button:hover {
       background-color: #3c4254;
     }
 
-    section {
-      margin-bottom: 20px;
-    }
-
-    ul {
-      list-style-type: none;
-      padding: 0;
+    #module-cards > div {
+      background: #1c1f26;
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 10px;
     }
 
     pre {
@@ -51,96 +53,61 @@
       padding: 15px;
       border-radius: 8px;
       white-space: pre-wrap;
-      word-wrap: break-word;
     }
 
-    #loading {
-      color: #ffcc00;
-      margin: 10px 0;
+    #resultIA {
+      margin-top: 10px;
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>🔒 NetSecure Pro IA</h1>
-    <p>Plateforme IA multi-origines pour la sécurité réseau</p>
-  </header>
 
-  <section id="status">
-    <h2>📡 État du réseau</h2>
-    <ul>
-      <li>Appareils connectés : <span id="deviceCount">12</span></li>
-      <li>Menaces détectées : <span id="threatCount">1</span></li>
-      <li>Origine IA : <span id="activeOrigin">AI-LocalProxy</span></li>
-    </ul>
-  </section>
+<header>
+  <h1>🔒 NetSecure Pro IA</h1>
+  <p>Interaction IA et chargement dynamique des modules</p>
+</header>
 
-  <section id="actions">
-    <h2>🧠 Analyses IA</h2>
-    <button onclick="fetchSentiment()">Analyse de trafic</button>
-    <button onclick="fetchSummary()">Résumé rapport</button>
-    <button onclick="fetchRecommendations()">Recommandations IA</button>
-  </section>
+<section>
+  <h2>🧠 Tester une logique IA</h2>
+  <input type="text" id="inputIA" placeholder="Écris ici une logique à tester...">
+  <button onclick="runIA()">Lancer l'analyse IA</button>
+  <div id="resultIA">...</div>
+</section>
 
-  <div id="loading" style="display:none;">⏳ Analyse en cours...</div>
+<section>
+  <h2>📦 Modules IA chargés</h2>
+  <div id="module-cards"></div>
+</section>
 
-  <section id="output">
-    <h2>📄 Résultat</h2>
-    <pre id="resultBox" aria-live="polite">...</pre>
-  </section>
+<footer>
+  <p>&copy; 2025 NetSecure Pro IA - milyes@netsecurepro.ca</p>
+</footer>
 
-  <footer>
-    <p>&copy; 2025 NetSecure Pro IA - milyes@netsecurepro.ca</p>
-  </footer>
+<script>
+  async function runIA() {
+    const input = document.getElementById("inputIA").value;
+    const result = document.getElementById("resultIA");
+    result.innerHTML = "🧠 Réponse IA en cours...";
+    setTimeout(() => {
+      result.innerHTML = "✅ IA a analysé votre logique : '" + input + "'";
+    }, 1500);
+  }
 
-  <script>
-    function delay(ms) {
-      return new Promise(resolve => setTimeout(resolve, ms));
-    }
+  fetch("logic_data/netsecure_ai_modules.json")
+    .then(response => response.json())
+    .then(data => {
+      const container = document.getElementById("module-cards");
+      data.forEach(mod => {
+        const card = document.createElement("div");
+        card.innerHTML = `
+          <h3>${mod.name}</h3>
+          <p>${mod.description}</p>
+          <p>Status : ${mod.status}</p>
+        `;
+        container.appendChild(card);
+      });
+    });
+</script>
 
-    async function fetchSentiment() {
-      showLoading();
-      await delay(1000);
-      const fakeData = {
-        status: "OK",
-        analysis: "Aucune anomalie détectée dans le trafic réseau."
-      };
-      updateResult(fakeData);
-    }
-
-    async function fetchSummary() {
-      showLoading();
-      await delay(1000);
-      const fakeData = {
-        status: "OK",
-        summary: "Le réseau fonctionne normalement. Une seule menace mineure a été neutralisée."
-      };
-      updateResult(fakeData);
-    }
-
-    async function fetchRecommendations() {
-      showLoading();
-      await delay(1000);
-      const fakeData = {
-        status: "OK",
-        recommendations: [
-          "Mettre à jour le pare-feu.",
-          "Vérifier les logs VPN.",
-          "Renforcer les mots de passe."
-        ]
-      };
-      updateResult(fakeData);
-    }
-
-    function showLoading() {
-      document.getElementById("loading").style.display = "block";
-      document.getElementById("resultBox").textContent = "...";
-    }
-
-    function updateResult(data) {
-      document.getElementById("loading").style.display = "none";
-      document.getElementById("resultBox").textContent = JSON.stringify(data, null, 2);
-    }
-  </script>
 </body>
 </html>
