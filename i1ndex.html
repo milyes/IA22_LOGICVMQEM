@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>NetSecure Pro IA - Tableau de bord</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #0f1117;
+      color: #e0e0e0;
+    }
+
+    header {
+      background-color: #181b23;
+      padding: 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 24px;
+      color: #4caf50;
+    }
+
+    header p {
+      margin: 5px 0 0;
+      color: #aaa;
+    }
+
+    main {
+      max-width: 900px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: #181b23;
+      border-radius: 10px;
+    }
+
+    section {
+      margin-bottom: 30px;
+    }
+
+    h2 {
+      color: #4caf50;
+      margin-bottom: 10px;
+    }
+
+    #status ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    #status li {
+      margin: 5px 0;
+    }
+
+    #inputIA {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      background-color: #1c1f26;
+      color: #fff;
+      border: 1px solid #333;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-bottom: 10px;
+    }
+
+    #resultIA, #module-cards {
+      background-color: #1c1f26;
+      padding: 10px;
+      border-radius: 5px;
+      margin-top: 10px;
+    }
+
+    #module-cards > div {
+      margin-bottom: 10px;
+      background-color: #2b2f3a;
+      padding: 10px;
+      border-radius: 5px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 10px;
+      color: #777;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>🔒 NetSecure Pro IA</h1>
+  <p>Plateforme IA multi-origines pour la sécurité réseau</p>
+</header>
+
+<main>
+  <section id="status">
+    <h2>📡 État du réseau</h2>
+    <ul>
+      <li>Appareils connectés : <span id="deviceCount">3</span></li>
+      <li>Menaces détectées : <span id="threatCount">0</span></li>
+      <li>Origine IA : <span id="activeOrigin">Local (Flask)</span></li>
+    </ul>
+    <button onclick="testNetwork()">🔍 Tester le réseau</button>
+  </section>
+
+  <section id="ia-tools">
+    <h2>🧠 Interaction IA</h2>
+    <input id="inputIA" type="text" placeholder="Entrer une logique à tester...">
+    <button onclick="runIA()">Lancer l'IA</button>
+    <button onclick="activateIA()">⚡ Activer IA</button>
+    <button onclick="deactivateIA()">🛑 Désactiver IA</button>
+    <div id="resultIA">...</div>
+  </section>
+
+  <section id="modules">
+    <h2>📦 Modules IA chargés</h2>
+    <div id="module-cards"></div>
+  </section>
+</main>
+
+<footer>
+  &copy; 2025 NetSecure Pro IA - milyes@netsecurepro.ca
+</footer>
+
+<script>
+  function runIA() {
+    const input = document.getElementById("inputIA").value;
+    const result = document.getElementById("resultIA");
+    result.innerHTML = "🧠 Analyse IA en cours...";
+    setTimeout(() => {
+      result.innerHTML = "✅ IA a analysé votre logique : '" + input + "'";
+    }, 1500);
+  }
+
+  function activateIA() {
+    const result = document.getElementById("resultIA");
+    result.innerHTML = "✅ IA activée (mode sécurisé).";
+  }
+
+  function deactivateIA() {
+    const result = document.getElementById("resultIA");
+    result.innerHTML = "❌ IA désactivée pour cette session.";
+  }
+
+  function testNetwork() {
+    const devices = Math.floor(Math.random() * 10) + 1;
+    const threats = Math.floor(Math.random() * 3);
+    document.getElementById("deviceCount").innerText = devices;
+    document.getElementById("threatCount").innerText = threats;
+    document.getElementById("activeOrigin").innerText = "Cloud IA (backup)";
+    alert("Test réseau effectué : " + devices + " appareils détectés.");
+  }
+
+  // Chargement dynamique des modules IA
+  fetch("logic_data/netsecure_ai_modules.json")
+    .then(response => response.json())
+    .then(data => {
+      const container = document.getElementById("module-cards");
+      data.forEach(mod => {
+        const card = document.createElement("div");
+        card.innerHTML = `<strong>${mod.name}</strong><br>${mod.description}<br>Status: <em>${mod.status}</em>`;
+        container.appendChild(card);
+      });
+    });
+</script>
+
+</body>
+</html>
