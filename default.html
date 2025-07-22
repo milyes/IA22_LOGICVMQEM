@@ -2,94 +2,102 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>IA22 Hybrid Bloc - Terminal Action</title>
+    <title>IA22_LOGIC - Terminal IA Sécurisé</title>
     <style>
         body {
-            background-color: #0b0b0b;
+            background-color: #0e0e0e;
             color: #00ff88;
             font-family: monospace;
+            margin: 0;
             padding: 20px;
         }
 
-        .ia-container {
-            max-width: 600px;
-            margin: 0 auto;
-            background-color: #000;
+        h1 {
+            text-align: center;
+            color: #00ff88;
+            margin-bottom: 10px;
+        }
+
+        .interface {
+            max-width: 800px;
+            margin: auto;
             border: 2px solid #00ff88;
             padding: 20px;
-            border-radius: 8px;
+            background-color: #000;
+            box-shadow: 0 0 20px #00ff88;
         }
 
-        .terminal {
-            background-color: #111;
-            padding: 15px;
-            border: 1px dashed #00ff88;
-            white-space: pre-wrap;
-            height: 200px;
-            overflow-y: auto;
+        .buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
             margin-bottom: 20px;
         }
 
-        .button-group {
-            display: flex;
-            justify-content: space-between;
-            gap: 10px;
-        }
-
         button {
-            flex: 1;
             background-color: #222;
             color: #00ff88;
             border: 1px solid #00ff88;
-            padding: 10px;
+            padding: 10px 20px;
             cursor: pointer;
             transition: 0.2s;
+            min-width: 200px;
         }
 
         button:hover {
             background-color: #00ff88;
             color: #000;
         }
+
+        .terminal-output {
+            background-color: #111;
+            padding: 15px;
+            border: 1px dashed #00ff88;
+            white-space: pre-wrap;
+            height: 300px;
+            overflow-y: auto;
+        }
     </style>
 </head>
 <body>
 
-<div class="ia-container">
-    <h2>IA22_LOGIC HYBRIDE</h2>
-    <div class="terminal" id="terminal-output">
-        [Système IA22 prêt] ...
+    <h1>IA22_LOGIC - Interface Sécurisée</h1>
+
+    <div class="interface">
+
+        <div class="buttons">
+            <button onclick="executeCommand('Analyse Système')">Analyse Système</button>
+            <button onclick="executeCommand('Diagnostic Sécurité')">Diagnostic Sécurité</button>
+            <button onclick="executeCommand('Mise à jour IA')">Mise à jour IA</button>
+            <button onclick="executeCommand('Scan Périphériques')">Scan Périphériques</button>
+            <button onclick="executeCommand('Rapport Sécurité')">Rapport Sécurité</button>
+            <button onclick="executeCommand('Prédire Utilisateur')">Prédire Utilisateur</button>
+            <button onclick="executeCommand('Analyse Sentiment')">Analyse Sentiment</button>
+            <button onclick="executeCommand('Correction Texte')">Correction Texte</button>
+            <button onclick="executeCommand('Mot de Passe Fort')">Mot de Passe Fort</button>
+            <button onclick="executeCommand('Scan Vulnérabilités')">Scan Vulnérabilités</button>
+            <button onclick="executeCommand('Analyse Ports Réseau')">Analyse Ports Réseau</button>
+            <button onclick="executeCommand('ifconfig')">ifconfig</button>
+            <button onclick="executeCommand('curl https://example.com')">curl example.com</button>
+        </div>
+
+        <div class="terminal-output" id="terminal">
+            [IA22_LOGIC - Système Initialisé... Prêt pour exécution]\n
+        </div>
+
     </div>
 
-    <div class="button-group">
-        <button onclick="executeAction('Analyse sécurité')">Analyse IA</button>
-        <button onclick="executeAction('Lancement Emprunt')">Lancer Emprunt</button>
-        <button onclick="executeAction('Afficher Logs')">Afficher Logs</button>
-    </div>
-</div>
-
-<script>
-    function executeAction(action) {
-        const terminal = document.getElementById('terminal-output');
-        let output = '';
-
-        switch (action) {
-            case 'Analyse sécurité':
-                output = '✅ IA22 : Analyse de sécurité terminée.';
-                break;
-            case 'Lancement Emprunt':
-                output = '🔄 IA22 : Emprunt lancé avec succès.';
-                break;
-            case 'Afficher Logs':
-                output = '📄 IA22 : Aucune anomalie détectée.';
-                break;
-            default:
-                output = '❓ IA22 : Action inconnue.';
+    <script>
+        function executeCommand(command) {
+            const terminal = document.getElementById('terminal');
+            terminal.innerText += `\n[IA22_LOGIC] Exécution : ${command} ...`;
+            setTimeout(() => {
+                terminal.innerText += `\n[IA22_LOGIC] ✅ Résultat : La commande "${command}" a été exécutée avec succès.\n`;
+                terminal.scrollTop = terminal.scrollHeight;
+            }, 600);
         }
-
-        terminal.innerText += `\n[IA22_LOGIC] ${output}`;
-        terminal.scrollTop = terminal.scrollHeight;
-    }
-</script>
+    </script>
 
 </body>
 </html>
