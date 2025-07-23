@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>IA22_COOPKIT – Analyse Médicale</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body { font-family: 'Segoe UI', sans-serif; background: #eef9ff; margin: 0; padding: 20px; }
+    h1 { color: #0077aa; margin-bottom: 10px; }
+    textarea, input, button {
+      width: 100%; font-size: 16px; margin: 10px 0; padding: 10px; border-radius: 8px;
+      border: 1px solid #ccc; box-sizing: border-box;
+    }
+    .output {
+      background: #fff; border-left: 5px solid #0077aa;
+      padding: 15px; white-space: pre-wrap; margin-top: 15px;
+    }
+    .section { margin-top: 20px; }
+    footer { margin-top: 40px; text-align: center; font-size: 12px; color: #666; }
+  </style>
+</head>
+<body>
+
+  <h1>IA22_COOPKIT + IA22_LOGIC</h1>
+  <p>Entrez une demande médicale ou logistique ci-dessous :</p>
+  
+  <textarea id="input" placeholder="Ex : douleur abdominale, emprunt de tensiomètre, besoin de coordination infirmier..."></textarea>
+  <input id="apiurl" type="text" placeholder="(Optionnel) URL API GPT personnelle">
+  <button onclick="analyser()">Analyser</button>
+
+  <div class="output" id="result" style="display:none;"></div>
+
+  <footer>
+    Zoubirou Mohammed Ilyes • NetSecurePro IA © 2025 – IA22_COOPKIT_LOGIC<br>
+    <a href="https://milyes.github.io/MedicalTrackerPro/medu.html">Page source</a>
+  </footer>
+
+  <script>
+    async function analyser() {
+      const texte = document.getElementById("input").value.trim();
+      const urlGPT = document.getElementById("apiurl").value.trim();
+      const resDiv = document.getElementById("result");
+      resDiv.style.display = "block";
+
+      if (!texte) {
+        resDiv.textContent = "Veuillez entrer une demande médicale ou logistique.";
+        return;
+      }
+
+      // Mode embarqué IA22_LOGIC + IA22_COOPKIT
+      if (!urlGPT) {
+        let sortie = {};
+        if (/douleur|fièvre|fatigue|toux/.test(texte.toLowerCase())) {
+          sortie = {
+            module: "IA22_LOGIC",
+            type: "Symptôme médical détecté",
+            détail: texte,
+            priorité: texte.includes("thoracique") ? "Urgente" : "Modérée",
+            recommandation: "Avis médical recommandé"
+          };
+        } else if (/emprunt|demande|dispositif|matériel/.test(texte.toLowerCase())) {
+          const matériel = texte.includes("glucomètre") ? "Glucomètre" :
+                           texte.includes("tensiomètre") ? "Tensiomètre" :
+                           "Dispositif non spécifié";
+          sortie = {
+            module: "IA22_COOPKIT",
+            type: "Demande logistique détectée",
+            matériel: matériel,
+            coordination: "Infirmier ou responsable logistique",
+            durée_suggérée: texte.match(/\d+\s*(jours|semaines|mois)/i)?.[0] || "7 jours"
+          };
+        } else if (/coordination|transfert|aide|visite/.test(texte.toLowerCase())) {
+          sortie = {
+            module: "IA22_COOPKIT",
+            action: "Coordination de soins",
+            type: "Besoin de suivi ou visite",
+            équipe: "Coordination IA + intervenant",
+            statut: "À prioriser dans la tournée"
+          };
+        } else {
+          sortie = {
+            statut: "Non reconnu",
+            suggestion: "Essayez : 'fièvre 2 jours', 'emprunter tensiomètre', 'besoin d'aide infirmier'"
+          };
+        }
+        resDiv.textContent = JSON.stringify(sortie, null, 2);
+        return;
+      }
+
+      // Mode online avec API GPT perso
+      try {
+        const res = await fetch(urlGPT, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer TON_CLE_API"  // <-- à remplacer
+          },
+          body: JSON.stringify({
+            model: "gpt-4",
+            messages: [{ role: "user", content: texte }],
+            temperature: 0.6
+          })
+        });
+        const data = await res.json();
+        const msg = data.choices?.[0]?.message?.content || "Aucune réponse.";
+        resDiv.textContent = "Réponse IA :\n\n" + msg;
+      } catch (err) {
+        resDiv.textContent = "Erreur API : " + err;
+      }
+    }
+  </script>
+
+</body>
+</html>
