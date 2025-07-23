@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Coopkit IA22_LOGIC Medical</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body { font-family: sans-serif; background: #f0f8ff; padding: 20px; }
+    h1 { color: #006699; }
+    textarea, input, button {
+      width: 100%; font-size: 16px; padding: 10px; margin-top: 10px; box-sizing: border-box;
+    }
+    .output {
+      background: #fff; border-left: 5px solid #0099cc;
+      padding: 15px; margin-top: 20px; white-space: pre-wrap;
+    }
+    footer { margin-top: 30px; text-align: center; font-size: 13px; color: #555; }
+  </style>
+</head>
+<body>
+
+  <h1>🩺 Coopkit IA22_LOGIC – Analyse Médicale Intelligente</h1>
+  <p>Exemple : <i>« Fièvre depuis 2 jours », « Je souhaite emprunter un glucomètre », « Douleur thoracique aiguë »</i></p>
+
+  <textarea id="question" placeholder="Entrez votre description médicale ou besoin ici..."></textarea>
+  <input id="gptapi" type="text" placeholder="URL API GPT personnelle (optionnel)">
+  <button onclick="lancerIA()">Analyser avec IA22_LOGIC</button>
+
+  <div class="output" id="reponse" style="display:none;"></div>
+
+  <footer>
+    Coopkit IA22_LOGIC Medical • Zoubirou Mohammed Ilyes © 2025 – NetSecurePro IA
+  </footer>
+
+  <script>
+    async function lancerIA() {
+      const texte = document.getElementById("question").value.trim();
+      const urlGPT = document.getElementById("gptapi").value.trim();
+      const sortie = document.getElementById("reponse");
+      sortie.style.display = "block";
+
+      // --- Mode IA22_LOGIC embarqué (offline)
+      if (!urlGPT) {
+        let résultat = {};
+        if (/fièvre|toux|douleur/.test(texte.toLowerCase())) {
+          résultat = {
+            analyse: "Symptôme détecté",
+            type: texte.includes("fièvre") ? "Infectieux" :
+                  texte.includes("douleur thoracique") ? "Cardiaque potentiel" : "Symptôme courant",
+            recommandation: "Surveillance 24h + avis médical si persistant",
+            IA22_LOGIC: "Analyse médicale rapide"
+          };
+        } else if (/emprunter|demande/.test(texte.toLowerCase())) {
+          const objet = texte.includes("glucomètre") ? "Glucomètre" :
+                        texte.includes("tensiomètre") ? "Tensiomètre" : "Dispositif non précisé";
+          résultat = {
+            action: "Demande d'emprunt",
+            matériel: objet,
+            durée: texte.match(/\d+\s*(jours|semaines|mois)/i)?.[0] || "Durée non spécifiée",
+            IA22_LOGIC: "Gestion médicale logistique"
+          };
+        } else {
+          résultat = {
+            statut: "Entrée non reconnue",
+            suggestion: "Essayez une phrase comme 'fièvre depuis 3 jours' ou 'emprunter un tensiomètre pour 1 semaine'"
+          };
+        }
+        sortie.textContent = JSON.stringify(résultat, null, 2);
+        return;
+      }
+
+      // --- Mode Online (via GPT personnel si URL fournie)
+      try {
+        const res = await fetch(urlGPT, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer TON_CLE_API" // <-- à remplacer par ta clé
+          },
+          body: JSON.stringify({
+            model: "gpt-4", // ou gpt-3.5-turbo
+            messages: [{ role: "user", content: texte }],
+            temperature: 0.7
+          })
+        });
+
+        const data = await res.json();
+        const réponseGPT = data.choices?.[0]?.message?.content || "Pas de réponse du modèle GPT.";
+        sortie.textContent = "Réponse GPT IA :\n\n" + réponseGPT;
+      } catch (err) {
+        sortie.textContent = "Erreur IA GPT : " + err;
+      }
+    }
+  </script>
+
+</body>
+</html>
