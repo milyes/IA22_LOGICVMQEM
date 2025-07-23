@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>IA22 Logic – Plateforme IA Éducative</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f8fc;
+      margin: 0;
+      padding: 2rem;
+      color: #222;
+    }
+    header {
+      background: #003366;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+      border-radius: 8px;
+    }
+    h1 {
+      margin: 0;
+      font-size: 1.8rem;
+    }
+    #chatbox {
+      margin-top: 2rem;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+      background: white;
+      padding: 1rem;
+      border-radius: 8px;
+      box-shadow: 0 0 10px #ccc;
+    }
+    .msg {
+      margin: 0.5rem 0;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+    }
+    .user {
+      background: #cce5ff;
+      text-align: right;
+    }
+    .ai {
+      background: #e2e2e2;
+      text-align: left;
+    }
+    #form {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+    #input {
+      flex-grow: 1;
+      padding: 0.5rem;
+      font-size: 1rem;
+      border-radius: 4px;
+      border: 1px solid #999;
+    }
+    button {
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+      border: none;
+      border-radius: 4px;
+      background: #003366;
+      color: white;
+      cursor: pointer;
+    }
+    footer {
+      margin-top: 3rem;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>IA22_LOGIC – Plateforme Coopkit IA Online</h1>
+    <p>Éducation, Médecine, IA Visionnaire & ChatGPT</p>
+  </header>
+
+  <div id="chatbox">
+    <div id="messages"></div>
+    <form id="form">
+      <input type="text" id="input" placeholder="Posez une question..." required />
+      <button type="submit">Envoyer</button>
+    </form>
+  </div>
+
+  <footer>
+    Propulsé par NetSecurePro IA – Mohammed Ilyes Zoubirou © 2025
+  </footer>
+
+  <script>
+    const form = document.getElementById('form');
+    const input = document.getElementById('input');
+    const messages = document.getElementById('messages');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const text = input.value.trim();
+      if (!text) return;
+
+      addMessage(text, 'user');
+      input.value = '';
+
+      addMessage("Réflexion IA en cours...", 'ai');
+
+      try {
+        const res = await fetch("https://api.mlyes.netsecurepro.ai/chat", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ message: text })
+        });
+
+        const data = await res.json();
+        document.querySelectorAll('.ai').pop().remove();
+        addMessage(data.reply || "[Aucune réponse]", 'ai');
+      } catch (err) {
+        document.querySelectorAll('.ai').pop().remove();
+        addMessage("Erreur de connexion au serveur IA.", 'ai');
+      }
+    });
+
+    function addMessage(text, type) {
+      const msg = document.createElement('div');
+      msg.className = 'msg ' + type;
+      msg.textContent = text;
+      messages.appendChild(msg);
+      messages.scrollTop = messages.scrollHeight;
+    }
+  </script>
+
+</body>
+</html>
