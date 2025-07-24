@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IA22_LOGIC – Interface IA</title>
+  <style>
+    body {
+      background: #0d1117;
+      color: #c9d1d9;
+      font-family: monospace;
+      margin: 0;
+      padding: 20px;
+    }
+    h1, h2 {
+      color: #58a6ff;
+      text-align: center;
+    }
+    .section {
+      max-width: 800px;
+      margin: auto;
+      margin-bottom: 30px;
+    }
+    input[type="text"] {
+      width: 80%;
+      padding: 10px;
+      border-radius: 5px;
+      background: #161b22;
+      color: white;
+      border: 1px solid #30363d;
+    }
+    button {
+      margin-top: 10px;
+      padding: 10px 20px;
+      background-color: #238636;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #2ea043;
+    }
+    .result {
+      margin-top: 15px;
+      font-style: italic;
+      color: #a5d6ff;
+    }
+    .module-container {
+      display: grid;
+      gap: 15px;
+      margin-top: 20px;
+    }
+    .module-card {
+      background: #1c1f26;
+      border-radius: 10px;
+      padding: 15px;
+      border: 1px solid #30363d;
+    }
+    .footer {
+      text-align: center;
+      font-size: 0.8em;
+      color: #8b949e;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🧠 IA22_LOGIC – Module IA Autonome</h1>
+
+  <div class="section">
+    <h2>🔍 Analyse IA Logique</h2>
+    <input type="text" id="inputIA" placeholder="Tapez une logique IA à analyser..." />
+    <br />
+    <button onclick="runIA()">Analyser</button>
+    <div class="result" id="resultIA">🧠 En attente d'une commande utilisateur...</div>
+  </div>
+
+  <div class="section">
+    <h2>📦 Modules IA embarqués</h2>
+    <div id="module-cards" class="module-container">
+      <!-- Modules IA ajoutés dynamiquement -->
+    </div>
+  </div>
+
+  <div class="footer">
+    Projet IA22_Laboratoire • Zoubirou Mohammed Ilyes • ORCID : 0009-0007-7571-3178
+  </div>
+
+  <script>
+    // Analyse IA simulée
+    async function runIA() {
+      const input = document.getElementById("inputIA").value;
+      const result = document.getElementById("resultIA");
+      result.innerHTML = "🧠 Réponse IA en cours...";
+      setTimeout(() => {
+        result.innerHTML = "✅ IA a analysé votre logique : '" + input + "'";
+      }, 1500);
+    }
+
+    // Données JSON embarquées (en dur)
+    const modules = [
+      {
+        name: "Analyse Bash",
+        description: "Interprétation IA de scripts Bash côté CLI.",
+        status: "Actif"
+      },
+      {
+        name: "WebView IA Locale",
+        description: "Interface IA fonctionnant sans Internet dans WebView APK.",
+        status: "Stable"
+      },
+      {
+        name: "Proxy IA Cloud",
+        description: "Tunnel IA via Cloudflare ou Ngrok pour accès distant.",
+        status: "Beta"
+      }
+    ];
+
+    // Génération dynamique des cartes modules IA
+    const container = document.getElementById("module-cards");
+    modules.forEach(mod => {
+      const card = document.createElement("div");
+      card.className = "module-card";
+      card.innerHTML = `
+        <h3>${mod.name}</h3>
+        <p>${mod.description}</p>
+        <p><strong>Status :</strong> ${mod.status}</p>
+      `;
+      container.appendChild(card);
+    });
+  </script>
+
+</body>
+</html>
