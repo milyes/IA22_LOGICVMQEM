@@ -2,89 +2,84 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <title>IA22ZERO – Console cognitive</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IA22 – Archives et Modules</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
   <style>
     body {
-      background-color: #0f0f18;
-      color: #ffffff;
-      font-family: "Segoe UI", sans-serif;
+      font-family: 'Roboto', sans-serif;
       margin: 0;
       padding: 0;
+      background-color: #f9f9f9;
     }
     header {
-      background-color: #1a1d23;
+      background-color: #002b5c;
+      color: white;
       padding: 20px;
       text-align: center;
     }
-    h1 {
-      margin: 0;
-      font-size: 2em;
-    }
     main {
-      padding: 30px;
+      padding: 40px;
     }
-    textarea {
-      width: 100%;
-      height: 120px;
-      padding: 12px;
-      background-color: #1f222a;
-      color: #fff;
-      border: none;
-      border-radius: 6px;
-      font-size: 1em;
-      font-family: monospace;
+    section {
+      margin-bottom: 40px;
     }
-    button {
-      margin-top: 10px;
-      padding: 12px 24px;
-      background-color: #ffbb00;
-      color: #111;
-      border: none;
-      border-radius: 6px;
-      font-weight: bold;
-      cursor: pointer;
+    h2 {
+      color: #004080;
     }
-    #output {
-      margin-top: 20px;
+    .module {
+      background: #ffffff;
+      border: 1px solid #ddd;
       padding: 20px;
-      background-color: #191c23;
-      border-radius: 6px;
-      box-shadow: inset 0 0 4px #000;
-      white-space: pre-line;
+      margin-top: 10px;
+      border-radius: 8px;
+    }
+    footer {
+      background-color: #002b5c;
+      color: white;
+      text-align: center;
+      padding: 20px;
     }
   </style>
 </head>
 <body>
-
   <header>
-    <h1>IA22ZERO()</h1>
-    <p>Interpréteur logique IA – Système autonome</p>
+    <h1>🧠 IA22 | Modules et Archives</h1>
+    <p>Explore les projets IA, outils, prototypes et archives personnelles</p>
   </header>
 
   <main>
-    <h2>🧠 Entrée IA</h2>
-    <textarea id="inputIA" placeholder="Ex : if utilisateur = 'ilyes' then accès = autorisé"></textarea>
-    <button onclick="interpreterIA()">Lancer IA</button>
-    <div id="output">🔎 En attente d'instruction IA...</div>
+    <section>
+      <h2>📁 Mes Modules IA22</h2>
+      <div class="module">
+        <h3>Module 01 – Reconnaissance d’image</h3>
+        <p>Prototype basé sur TensorFlow avec détection faciale et objets IA.</p>
+      </div>
+      <div class="module">
+        <h3>Module 02 – Archivage Web IA</h3>
+        <p>Page auto-générée à partir de tes archives OneDrive.</p>
+      </div>
+      <div class="module">
+        <h3>Module 03 – Générateur IA de contenu éducatif</h3>
+        <p>Création automatique de quiz, présentations et supports PDF.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>🧪 Projets expérimentaux</h2>
+      <div class="module">
+        <h3>Projet X – Analyse de sentiment</h3>
+        <p>Utilisation de modèles NLP pour interpréter les émotions dans les textes.</p>
+      </div>
+      <div class="module">
+        <h3>Projet Y – Assistant vocal IA22</h3>
+        <p>Fonction vocale active avec génération dynamique de réponse.</p>
+      </div>
+    </section>
   </main>
 
-  <script>
-    function interpreterIA() {
-      const input = document.getElementById("inputIA").value.toLowerCase();
-      let réponse = "🧠 IA22ZERO analyse la logique...\n";
-
-      if (input.includes("ilyes") && input.includes("if") && input.includes("then")) {
-        réponse += "✅ Identité confirmée. Accès IA autorisé.";
-      } else if (input.includes("if") && input.includes("then")) {
-        réponse += "⚙️ Structure logique détectée. IA en cours d'exécution.";
-      } else {
-        réponse += "❌ Syntaxe incorrecte. Format attendu : if condition then action.";
-      }
-
-      document.getElementById("output").innerText = réponse;
-    }
-  </script>
-
+  <footer>
+    <p>© 2025 IA22 – Tous droits réservés</p>
+  </footer>
 </body>
 </html>
