@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>IA22_LOGIC – OCR Intelligent</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f3f4f6;
+      padding: 2em;
+    }
+    h1 {
+      text-align: center;
+      color: #2c3e50;
+    }
+    .container {
+      max-width: 800px;
+      margin: auto;
+      background: #ffffff;
+      padding: 2em;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      border-radius: 1em;
+    }
+    textarea {
+      width: 100%;
+      height: 200px;
+      margin-top: 1em;
+      font-family: monospace;
+      padding: 1em;
+      border: 1px solid #ccc;
+      border-radius: .5em;
+      resize: vertical;
+    }
+    .btn {
+      padding: 0.8em 1.2em;
+      margin-top: 1em;
+      font-size: 1em;
+      border: none;
+      border-radius: .5em;
+      background-color: #3498db;
+      color: white;
+      cursor: pointer;
+    }
+    .btn:hover {
+      background-color: #2980b9;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>IA22_LOGIC – OCR IA Multilingue</h1>
+
+    <label for="fileInput">Fichier image/PDF :</label><br>
+    <input type="file" id="fileInput"><br><br>
+
+    <label for="langSelect">Langue :</label>
+    <select id="langSelect">
+      <option value="eng">Anglais</option>
+      <option value="fra">Français</option>
+      <option value="fra+eng">Français + Anglais</option>
+    </select><br><br>
+
+    <button class="btn" onclick="runOCR()">📄 Lancer OCR</button>
+    <button class="btn" onclick="downloadJSON()">💾 Exporter JSON</button>
+
+    <h3>Texte extrait :</h3>
+    <textarea id="outputText" readonly></textarea>
+
+    <h3>JSON OCR (métadonnées) :</h3>
+    <textarea id="outputJSON" readonly></textarea>
+  </div>
+
+  <script>
+    async function runOCR() {
+      const fileInput = document.getElementById('fileInput');
+      const lang = document.getElementById('langSelect').value;
+
+      if (!fileInput.files.length) {
+        alert('Veuillez sélectionner un fichier.');
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append('file', fileInput.files[0]);
+      formData.append('lang', lang);
+
+      const response = await fetch('/ocr', {
+        method: 'POST',
+        body: formData
+      });
+
+      if (!response.ok) {
+        alert('Erreur lors de l\'envoi au serveur OCR');
+        return;
+      }
+
+      const result = await response.json();
+      document.getElementById('outputText').value = result.text;
+      document.getElementById('outputJSON').value = JSON.stringify(result.data, null, 2);
+    }
+
+    function downloadJSON() {
+      const json = document.getElementById('outputJSON').value;
+      const blob = new Blob([json], { type: 'application/json' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = 'ocr_result.json';
+      link.click();
+    }
+  </script>
+</body>
+</html>
