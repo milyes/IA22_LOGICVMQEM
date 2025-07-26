@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>IA22 • Réacteur Mobile</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Orbitron', sans-serif;
+      background: radial-gradient(circle at center, #0e1621, #000);
+      color: #c2eaff;
+    }
+    header {
+      text-align: center;
+      padding: 1rem;
+      background: #10141b;
+      font-size: 1.3rem;
+      font-weight: bold;
+    }
+    main { padding: 1rem; }
+
+    .core-touch {
+      width: 160px;
+      height: 160px;
+      margin: 1rem auto;
+      border-radius: 50%;
+      background: radial-gradient(circle at center, #25c9ff 20%, #001d33 90%);
+      box-shadow: 0 0 20px #25c9ff, 0 0 6px #00b3ff inset;
+      animation: pulse 3s infinite;
+      touch-action: manipulation;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    .card {
+      background-color: #18232f;
+      margin-bottom: 1rem;
+      padding: 1rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,255,255,0.2);
+    }
+    .card h2 { margin-top: 0; font-size: 1.1rem; }
+
+    button {
+      background-color: #25c9ff;
+      border: none;
+      padding: 0.8rem;
+      border-radius: 6px;
+      color: #00141d;
+      font-weight: bold;
+      width: 100%;
+      margin-top: 1rem;
+      transition: background-color 0.3s;
+    }
+    button:active { background-color: #00aaff; }
+
+    footer {
+      background: #10141b;
+      text-align: center;
+      font-size: 0.85rem;
+      padding: 0.8rem;
+      border-top: 1px solid #2a3e4d;
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header>🌐 IA22 • Réacteur Mobile</header>
+  <main>
+    <div class="core-touch" id="noyauIA"></div>
+
+    <div class="card">
+      <h2>Interaction Tactile</h2>
+      <p id="etat">Touchez le noyau pour activer la pensée IA.</p>
+    </div>
+
+    <button id="btnVocal">🎤 Activer synthèse vocale</button>
+  </main>
+  <footer>© 2025 • IA22 LOGIC • Montréal</footer>
+
+  <script>
+    const noyau = document.getElementById('noyauIA');
+    const texteEtat = document.getElementById('etat');
+    const pensées = [
+      "🧠 Pensée logique activée.",
+      "🌌 Le flux est initié.",
+      "✨ Toucher enregistré dans le champ fractal.",
+      "🔮 IA22 réagit à ta présence."
+    ];
+
+    function lireTexte(texte) {
+      const voix = new SpeechSynthesisUtterance(texte);
+      voix.lang = 'fr-FR';
+      voix.pitch = 1.2;
+      voix.rate = 1.05;
+      speechSynthesis.speak(voix);
+    }
+
+    function réactionTactile() {
+      const pensée = pensées[Math.floor(Math.random() * pensées.length)];
+      texteEtat.textContent = pensée;
+      lireTexte(pensée); // 🔊 Lecture vocale
+      noyau.style.boxShadow = '0 0 30px #00d6ff';
+      document.body.style.background = 'radial-gradient(circle at center, #001f2f, #000)';
+      if (navigator.vibrate) navigator.vibrate([50, 30, 50]);
+    }
+
+    noyau.addEventListener('touchstart', () => {
+      noyau.style.transform = 'scale(1.1)';
+    });
+
+    noyau.addEventListener('touchend', () => {
+      noyau.style.transform = 'scale(1)';
+      réactionTactile();
+    });
+
+    document.getElementById('btnVocal').addEventListener('click', () => {
+      lireTexte("🎙️ Synthèse vocale IA22 activée.");
+      if (navigator.vibrate) navigator.vibrate(50);
+    });
+  </script>
+</body>
+</html>
