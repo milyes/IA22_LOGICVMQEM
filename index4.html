@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Démo Requête API IA - IA22_LOGIC</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        h1 {
+            color: #007acc;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            max-width: 700px;
+            margin: auto;
+        }
+        textarea, input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            resize: vertical;
+        }
+        button {
+            margin-top: 15px;
+            padding: 10px 20px;
+            background-color: #007acc;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #005fa3;
+        }
+        pre {
+            background-color: #eee;
+            padding: 10px;
+            border-radius: 8px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        .footer {
+            margin-top: 40px;
+            font-size: 0.9em;
+            color: #888;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>IA22_LOGIC - Requête API IA</h1>
+        <p>Effectuer une requête POST vers une API IA et afficher la réponse JSON.</p>
+
+        <label for="prompt">Votre question / prompt :</label>
+        <textarea id="prompt" rows="4" placeholder="Posez votre question à l'IA..."></textarea>
+        
+        <label for="endpoint">URL de l'API :</label>
+        <input type="text" id="endpoint" value="https://api.exemple-ia.com/v1/predict">
+
+        <button onclick="sendRequest()">Envoyer à l'IA</button>
+
+        <h3>Réponse de l'IA :</h3>
+        <pre id="responseOutput">...</pre>
+    </div>
+
+    <div class="footer">
+        NetSecurePro IA22_LOGIC © 2025 – Zoubirou Mohammed Ilyes / ORCID : 0009-0007-7571-3178
+    </div>
+
+    <script>
+        async function sendRequest() {
+            const endpoint = document.getElementById('endpoint').value;
+            const prompt = document.getElementById('prompt').value;
+
+            try {
+                const response = await fetch(endpoint, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer YOUR_API_KEY' // Remplacer si besoin
+                    },
+                    body: JSON.stringify({ prompt: prompt })
+                });
+
+                const data = await response.json();
+                document.getElementById('responseOutput').textContent = JSON.stringify(data, null, 4);
+            } catch (error) {
+                document.getElementById('responseOutput').textContent = 'Erreur : ' + error;
+            }
+        }
+    </script>
+</body>
+</html>
