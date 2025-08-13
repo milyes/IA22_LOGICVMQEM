@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>IA22 LogicVMQEM – ASCII Art</title>
+  <style>
+    body {
+      background-color: #121212;
+      color: #00ffcc;
+      font-family: 'Courier New', Courier, monospace;
+      padding: 40px;
+      text-align: center;
+    }
+    .ascii-box {
+      white-space: pre;
+      border: 2px dashed #00ffcc;
+      padding: 20px;
+      margin: auto;
+      max-width: 90%;
+      overflow-x: auto;
+    }
+    h1 {
+      color: #ffffff;
+      font-size: 2em;
+      margin-bottom: 20px;
+    }
+    .result {
+      margin-top: 30px;
+      font-size: 1.2em;
+      color: #ffcc00;
+    }
+  </style>
+</head>
+<body>
+  <h1>IA22 LogicVMQEM – Visualisation ASCII</h1>
+  <div class="ascii-box">
+    <!-- Ton ASCII art ici -->
+    ,.,, ..,.  
+    ;,,: ,.:.  
+    ...
+  </div>
+
+  <div class="result" id="logicResult"></div>
+
+  <script>
+    // Exemple de logique IA22
+    const ctx = { age: 16 }; // Simule un contexte utilisateur
+
+    const rule = {
+      if: ctx.age < 18,
+      then: "deny_access",
+      because: "IA22 refuse l'accès aux mineurs"
+    };
+
+    const resultBox = document.getElementById("logicResult");
+
+    if (rule.if) {
+      resultBox.innerHTML = `🛑 Accès refusé : ${rule.because}`;
+    } else {
+      resultBox.innerHTML = `✅ Accès autorisé`;
+    }
+  </script>
+</body>
+</html>
