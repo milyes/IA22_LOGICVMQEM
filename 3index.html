@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mindmap CodeCraft — Interactif</title>
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'base',
+      flowchart: { curve: 'linear' }
+    });
+
+    // Fonction pour télécharger du texte en fichier
+    function downloadFile(filename, content) {
+      const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = filename;
+      link.click();
+      URL.revokeObjectURL(link.href);
+    }
+
+    // JSON enrichi du projet
+    const enrichedJSON = {
+      meta: {
+        name: "CodeCraft",
+        domain: "Intelligence Artificielle",
+        generated: true,
+        schema_version: "1.0.0"
+      },
+      data: {
+        nom: "CodeCraft",
+        type: "Intelligence Artificielle",
+        spécialités: ["Cybersécurité", "Développement Web", "Analyse de Données", "Intelligence Artificielle"],
+        langages: ["Python", "Java", "JavaScript", "C++"],
+        frameworks: ["TensorFlow", "PyTorch", "React", "Angular"],
+        bases_de_données: ["MySQL", "MongoDB", "SQL Server"],
+        systèmes_d_exploitation: ["Windows", "Linux", "macOS"]
+      }
+    };
+
+    window.downloadJSON = () => downloadFile('codecraft_mindmap.json', JSON.stringify(enrichedJSON, null, 2));
+
+    // Téléchargement du SVG après rendu Mermaid
+    window.downloadSVG = () => {
+      const svgElement = document.querySelector('.mermaid svg');
+      if (!svgElement) { alert("SVG non trouvé !"); return; }
+      const serializer = new XMLSerializer();
+      const svgString = serializer.serializeToString(svgElement);
+      downloadFile('codecraft_mindmap.svg', svgString);
+    }
+  </script>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f0f2f5; }
+    .mermaid { background: #fff; padding: 20px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); margin-bottom: 20px; }
+    h1 { text-align: center; color: #333; }
+    button {
+      margin: 5px;
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      background-color: #0078d7;
+      color: white;
+      transition: background-color 0.3s;
+    }
+    button:hover { background-color: #005ea3; }
+    .buttons { text-align: center; margin-bottom: 20px; }
+  </style>
+</head>
+<body>
+
+  <h1>Carte mentale — CodeCraft</h1>
+
+  <div class="buttons">
+    <button onclick="downloadSVG()">Télécharger SVG</button>
+    <button onclick="downloadJSON()">Télécharger JSON</button>
+  </div>
+
+  <div class="mermaid">
+mindmap
+  root((CodeCraft))
+    type:::type(Intelligence Artificielle)
+    spécialités
+      Cybersécurité
+      Développement Web
+      Analyse de Données
+      Intelligence Artificielle
+    langages
+      Python
+      Java
+      JavaScript
+      C++
+    frameworks
+      TensorFlow
+      PyTorch
+      React
+      Angular
+    bases_de_données
+      MySQL
+      MongoDB
+      SQL Server
+    systèmes_d_exploitation
+      Windows
+      Linux
+      macOS
+classDef type font-weight:bold;
+  </div>
+
+</body>
+</html>
