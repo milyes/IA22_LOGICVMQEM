@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>NetSecurePro IA22</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #0f172a;
+      color: #f1f5f9;
+      margin: 0;
+      padding: 20px;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .card {
+      background-color: #1e293b;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    }
+    button {
+      background-color: #3b82f6;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    button:hover {
+      background-color: #2563eb;
+    }
+    .status {
+      font-weight: bold;
+      color: #22c55e;
+    }
+    .log {
+      font-size: 0.9em;
+      color: #94a3b8;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>🛡️ NetSecurePro IA22</h1>
+    <p>Interface IA de surveillance et de diagnostic</p>
+  </header>
+
+  <div class="card" id="analyse">
+    <h2>🔍 Analyse système</h2>
+    <p>Statut : <span class="status" id="analyse-status">Inactif</span></p>
+    <button onclick="lancerAnalyse()">Lancer une analyse IA</button>
+    <div class="log" id="log-analyse"></div>
+  </div>
+
+  <div class="card" id="usb">
+    <h2>🔌 Détection USB</h2>
+    <p id="usb-status">Aucun périphérique détecté</p>
+    <button onclick="detecterUSB()">Simuler une connexion USB</button>
+    <div class="log" id="log-usb"></div>
+  </div>
+
+  <div class="card" id="tunnel">
+    <h2>🌐 Accès distant</h2>
+    <p>Session Cloudflare : <span class="status" id="tunnel-status">Non connectée</span></p>
+    <button onclick="activerTunnel()">Activer le tunnel sécurisé</button>
+    <div class="log" id="log-tunnel"></div>
+  </div>
+
+  <script>
+    function logAction(id, message) {
+      const log = document.getElementById(id);
+      const time = new Date().toLocaleTimeString();
+      log.textContent = `📝 ${message} à ${time}`;
+    }
+
+    function lancerAnalyse() {
+      const status = document.getElementById('analyse-status');
+      status.textContent = 'Analyse en cours...';
+      logAction('log-analyse', 'Analyse IA lancée');
+      setTimeout(() => {
+        status.textContent = 'Analyse terminée';
+        logAction('log-analyse', 'Analyse IA terminée');
+      }, 2000);
+    }
+
+    function detecterUSB() {
+      const status = document.getElementById('usb-status');
+      status.innerHTML = 'Périphérique détecté : <strong>USB-SecureKey</strong>';
+      logAction('log-usb', 'USB-SecureKey détecté');
+    }
+
+    function activerTunnel() {
+      const status = document.getElementById('tunnel-status');
+      status.textContent = 'Connexion en cours...';
+      logAction('log-tunnel', 'Tentative de connexion au tunnel');
+      setTimeout(() => {
+        status.textContent = 'Connectée';
+        logAction('log-tunnel', 'Tunnel sécurisé activé');
+        alert('Tunnel sécurisé activé via Cloudflare.');
+      }, 1500);
+    }
+  </script>
+
+</body>
+</html>
