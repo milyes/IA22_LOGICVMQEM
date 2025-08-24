@@ -1,0 +1,422 @@
+<!DOCTYPE html><html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>IA22_LOGIC • Terminal LTE eSIM (Admin & Partners)</title>
+  <style>
+    :root{
+      --bg:#0b0f14; --panel:#0f1520; --card:#121a26; --muted:#9fb3c8; --text:#e6eef7; --accent:#4cc9f0; --ok:#22c55e; --warn:#f59e0b; --err:#f43f5e; --border:#1e293b;
+      --radius:18px; --shadow:0 10px 30px rgba(0,0,0,.35);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;background:radial-gradient(1200px 800px at 80% -200px, rgba(76,201,240,.08), transparent),linear-gradient(180deg,#0b0f14,#0b0f14);color:var(--text);font:500 15px/1.6 system-ui, Segoe UI, Roboto, sans-serif}
+    a{color:var(--accent)}
+    .wrap{display:grid;place-items:center;min-height:100%}
+    .shell{width:min(1100px,95vw);}
+    .hero{display:flex;gap:18px;align-items:center;margin:32px 0 18px}
+    .badge{background:rgba(76,201,240,.12);color:var(--accent);padding:6px 10px;border:1px solid rgba(76,201,240,.25);border-radius:999px;font-size:12px;letter-spacing:.4px}
+    .card{background:linear-gradient(180deg,rgba(255,255,255,.03),transparent),var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+    .login{padding:22px}
+    label{display:block;margin:10px 0 6px;color:var(--muted);font-size:13px}
+    input,textarea,select,button{font:inherit;color:var(--text)}
+    input[type="password"],input[type="text"],input[type="url"],input[type="number"],textarea{width:100%;background:#0b1320;border:1px solid #1e293b;border-radius:12px;padding:12px 14px;outline:none}
+    input::placeholder,textarea::placeholder{color:#6b7b8f}
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+    .btn{background:linear-gradient(180deg, #1b2636, #121a26);border:1px solid #233249;border-radius:12px;padding:10px 14px;cursor:pointer;transition:.2s}
+    .btn:hover{transform:translateY(-1px);box-shadow:0 8px 16px rgba(0,0,0,.25)}
+    .btn.primary{background:linear-gradient(180deg,#1d2a3a,#152030);border-color:#27425c}
+    .btn.ok{border-color:rgba(34,197,94,.4);background:linear-gradient(180deg, rgba(34,197,94,.12), rgba(34,197,94,.04))}
+    .btn.warn{border-color:rgba(245,158,11,.4);background:linear-gradient(180deg, rgba(245,158,11,.12), rgba(245,158,11,.04))}
+    .btn.err{border-color:rgba(244,63,94,.5);background:linear-gradient(180deg, rgba(244,63,94,.12), rgba(244,63,94,.04))}
+    .muted{color:var(--muted)}.grid{display:grid;grid-template-columns:1.15fr .85fr;gap:16px}
+.terminal{padding:0;border-radius:var(--radius);overflow:hidden}
+.term-head{display:flex;align-items:center;justify-content:space-between;background:#0a1320;border-bottom:1px solid var(--border);padding:10px 14px}
+.dots{display:flex;gap:8px}
+.dot{width:10px;height:10px;border-radius:999px;background:#2b3a52}
+.dot.ok{background:#22c55e}.dot.warn{background:#f59e0b}.dot.err{background:#ef4444}
+.term-body{height:480px;overflow:auto;background:repeating-linear-gradient(transparent,transparent 26px, rgba(80,100,130,.08) 28px), linear-gradient(180deg,#0b0f14,#0b0f14)}
+pre{margin:0;padding:14px;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13px;white-space:pre-wrap;word-break:break-word}
+.term-input{display:flex;gap:10px;border-top:1px solid var(--border);padding:10px;background:#0a1320}
+.term-input input{flex:1;background:#0b1320}
+
+.side{padding:18px}
+.side h3{margin:0 0 10px}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:8px 12px;font-size:13px}
+.kv span{color:#9fb3c8}
+.pill{display:inline-flex;align-items:center;gap:8px;background:#0a1320;border:1px dashed #223048;border-radius:999px;padding:6px 10px;font-size:12px}
+.tag{display:inline-block;background:#0a1320;border:1px solid #223048;border-radius:8px;padding:4px 8px;margin:4px 4px 0 0;font-size:12px}
+
+.footer{margin:20px 0;color:#6b7b8f;font-size:12px}
+.hidden{display:none}
+
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <div class="shell">
+    <div class="hero">
+      <div class="badge">IA22 LOGIC • Terminal LTE • eSIM</div>
+    </div><!-- LOGIN / ACCESS CONTROL -->
+<section id="loginCard" class="card login">
+  <h2 style="margin:0 0 10px">Accès sécurisé</h2>
+  <p class="muted" style="margin:0 0 12px">Réservé aux <strong>administrateurs</strong> et <strong>partenaires autorisés</strong>. Les profils eSIM sont chiffrés localement (AES‑GCM).</p>
+  <div class="row">
+    <div>
+      <label>Rôle</label>
+      <select id="role">
+        <option value="admin">Administrateur</option>
+        <option value="partner">Partenaire</option>
+      </select>
+    </div>
+    <div>
+      <label>Clé d’accès (passphrase)</label>
+      <input id="pass" type="password" placeholder="Saisir la clé d’accès" autocomplete="current-password" />
+    </div>
+  </div>
+  <div class="row">
+    <div>
+      <label>ID Organisation (optionnel)</label>
+      <input id="org" type="text" placeholder="ex: org-uJg4H..." />
+    </div>
+    <div>
+      <label>Label de session (optionnel)</label>
+      <input id="label" type="text" placeholder="ex: NetSecurePro_IA22" />
+    </div>
+  </div>
+  <div class="actions">
+    <button class="btn primary" id="btnLogin">Entrer</button>
+    <button class="btn" id="btnRevealPolicy">Voir la politique de sécurité</button>
+  </div>
+  <details style="margin-top:12px">
+    <summary class="muted">Paramètres initiaux (à personnaliser)</summary>
+    <div style="margin-top:10px" class="muted">
+      Modifiez <code>ALLOWED_HASH_ADMIN</code> / <code>ALLOWED_HASH_PARTNER</code> dans le code si vous souhaitez restreindre par hash de clé. Par défaut, toute clé est acceptée mais sert au chiffrement local.
+    </div>
+  </details>
+</section>
+
+<!-- MAIN GRID: TERMINAL + SIDE PANEL -->
+<section id="mainGrid" class="grid hidden">
+  <div class="card terminal">
+    <div class="term-head">
+      <div class="dots">
+        <div class="dot err"></div><div class="dot warn"></div><div class="dot ok"></div>
+      </div>
+      <div style="opacity:.8">IA22_LOGIC • eSIM/LTE Secure Terminal</div>
+      <div id="sessionPill" class="pill">Session: —</div>
+    </div>
+    <div id="termBody" class="term-body"><pre id="termOut"></pre></div>
+    <div class="term-input">
+      <input id="cmd" type="text" placeholder="Tapez une commande (help pour l’aide)…" autocomplete="off" />
+      <button class="btn" id="run">Exécuter</button>
+    </div>
+  </div>
+
+  <div class="card side">
+    <h3>État LTE / eSIM</h3>
+    <div class="kv" id="statusKV"></div>
+    <h3 style="margin-top:16px">Commandes rapides</h3>
+    <div id="quick" style="display:flex;flex-wrap:wrap;gap:8px">
+      <button class="btn" data-cmd="help">help</button>
+      <button class="btn" data-cmd="esim.list">esim.list</button>
+      <button class="btn" data-cmd="lte.status">lte.status</button>
+      <button class="btn" data-cmd="audit.tail">audit.tail</button>
+      <button class="btn warn" data-cmd="clear">clear</button>
+      <button class="btn err" data-cmd="logout">logout</button>
+    </div>
+    <div style="margin-top:14px">
+      <span class="tag">AES‑GCM</span>
+      <span class="tag">PBKDF2‑SHA256</span>
+      <span class="tag">Role‑Based</span>
+      <span class="tag">Local‑Only</span>
+    </div>
+  </div>
+</section>
+
+<div class="footer">© 2025 NetSecurePro IA — IA22_LOGIC Terminal LTE eSIM • Auteur: Zoubirou Mohammed Ilyes • ORCID: <a href="https://orcid.org/0009-0007-7571-3178" target="_blank" rel="noopener">0009‑0007‑7571‑3178</a></div>
+
+  </div>
+</div><script>
+// ===================== IA22_LOGIC — Single Block =====================
+// Tout le coeur est encapsulé ici. Aucune dépendance externe.
+(() => {
+  const $ = (sel) => document.querySelector(sel);
+  const out = $('#termOut');
+  const body = $('#termBody');
+  const statusKV = $('#statusKV');
+
+  // \u26a0\ufe0f IMPORTANT LIMITATION
+  // Les navigateurs n'ont pas d'API publique pour ACTIVER un profil eSIM.
+  // Cette console permet: gestion sécurisée des QR/identifiants eSIM, journalisation,
+  // export chiffré, synchronisation avec un backend partenaire (optionnelle), et
+  // informations LTE côté client. Pour l'activation réelle, utilisez l'OS ou une app opérateur.
+
+  // --- Configuration sécurité (à adapter) ---
+  // Si vous souhaitez imposer une clé précise, placez ici le hash SHA‑256 attendu de la clé.
+  // Par défaut laissé à null: toute passphrase est acceptée (sert de clé de chiffrement locale).
+  const ALLOWED_HASH_ADMIN   = null;   // ex: "b1c0..." (hex)
+  const ALLOWED_HASH_PARTNER = null;   // ex: "7f9a..." (hex)
+
+  // --- État runtime ---
+  const ST = {
+    session:null,        // {role, org, label, keyHash, crypto}
+    dbKey:null,          // CryptoKey dérivée de la passphrase
+    storeKey:'ia22.esim.v1',
+    audit:[],            // événements récents
+    profiles:[],         // [{id,label, smdp, code, meta, createdAt}]
+    history:[],          // commandes
+  };
+
+  // --- Utilitaires ---
+  const now = () => new Date().toISOString();
+  const append = (text) => { out.textContent += text + "\n"; body.scrollTop = body.scrollHeight; };
+  const k = (name, val) => `<span>${name}</span><div>${val}</div>`;
+
+  function setKV(){
+    const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+    const type = conn?.type || conn?.effectiveType || 'inconnu';
+    const down = conn?.downlink ? `${conn.downlink} Mb/s` : '—';
+    const rtt  = conn?.rtt ? `${conn.rtt} ms` : '—';
+    const save = conn?.saveData ? 'activé' : 'non';
+    const role = ST.session?.role || '—';
+    const org  = ST.session?.org  || '—';
+    const lab  = ST.session?.label|| '—';
+
+    statusKV.innerHTML = [
+      k('Rôle', role),
+      k('Organisation', org),
+      k('Session', lab),
+      k('Type réseau', type),
+      k('Débit estimé', down),
+      k('RTT', rtt),
+      k('Data Saver', save),
+      k('Profils eSIM', ST.profiles.length)
+    ].join('');
+  }
+
+  // --- Crypto (WebCrypto) ---
+  const enc = new TextEncoder();
+  const dec = new TextDecoder();
+
+  async function sha256Hex(str){
+    const buf = await crypto.subtle.digest('SHA-256', enc.encode(str));
+    return [...new Uint8Array(buf)].map(b=>b.toString(16).padStart(2,'0')).join('');
+  }
+
+  async function deriveKey(passphrase, salt){
+    const base = await crypto.subtle.importKey('raw', enc.encode(passphrase), 'PBKDF2', false, ['deriveKey']);
+    return crypto.subtle.deriveKey(
+      {name:'PBKDF2', salt, iterations:120000, hash:'SHA-256'},
+      base,
+      {name:'AES-GCM', length:256},
+      false,
+      ['encrypt','decrypt']
+    );
+  }
+
+  async function encryptJSON(obj, key){
+    const iv = crypto.getRandomValues(new Uint8Array(12));
+    const data = enc.encode(JSON.stringify(obj));
+    const buf = await crypto.subtle.encrypt({name:'AES-GCM', iv}, key, data);
+    return {iv: Array.from(iv), blob: Array.from(new Uint8Array(buf))};
+  }
+  async function decryptJSON(payload, key){
+    const iv = new Uint8Array(payload.iv);
+    const data = new Uint8Array(payload.blob);
+    const buf = await crypto.subtle.decrypt({name:'AES-GCM', iv}, key, data);
+    return JSON.parse(dec.decode(buf));
+  }
+
+  function saveLocal(){
+    const raw = {profiles:ST.profiles, audit:ST.audit.slice(-200)};
+    localStorage.setItem(ST.storeKey, JSON.stringify(raw));
+  }
+  function loadLocal(){
+    const raw = localStorage.getItem(ST.storeKey);
+    if(!raw) return;
+    try{ const parsed = JSON.parse(raw); ST.profiles = parsed.profiles||[]; ST.audit = parsed.audit||[]; }
+    catch{ /* ignore */ }
+  }
+
+  function audit(ev, meta={}){
+    const item = {t:now(), ev, ...meta};
+    ST.audit.push(item);
+    saveLocal();
+  }
+
+  function genId(){ return 'esim_'+Math.random().toString(36).slice(2,10); }
+
+  // --- Accès ---
+  async function login(role, passphrase, org, label){
+    if(!passphrase) throw new Error('Clé d\'accès requise');
+    const keyHash = await sha256Hex(passphrase);
+    if(role==='admin' && ALLOWED_HASH_ADMIN && keyHash!==ALLOWED_HASH_ADMIN) throw new Error('Clé admin non autorisée');
+    if(role==='partner' && ALLOWED_HASH_PARTNER && keyHash!==ALLOWED_HASH_PARTNER) throw new Error('Clé partenaire non autorisée');
+
+    const salt = enc.encode('IA22_LOGIC:'+role+':'+(org||''));
+    const dbKey = await deriveKey(passphrase, salt);
+    ST.dbKey = dbKey;
+    ST.session = {role, org, label, keyHash};
+    loadLocal();
+    setKV();
+    append(`[${now()}] \u2705 Session ouverte (${role}) — ${label||'sans label'}`);
+    audit('login', {role, org, label});
+  }
+
+  function logout(){
+    audit('logout', {});
+    ST.session=null; ST.dbKey=null;
+    $('#mainGrid').classList.add('hidden');
+    $('#loginCard').classList.remove('hidden');
+    append(`[${now()}] \u274c Session fermée`);
+    setKV();
+  }
+
+  // --- Commandes ---
+  const CMDS = {
+    help(){
+      append(`\n\u2139\ufe0f Commandes disponibles:\n`+
+        `  help                              Affiche cette aide\n`+
+        `  whoami                            Rôle / org / session\n`+
+        `  lte.status                        Infos réseau (navigateur)\n`+
+        `  clear                             Nettoie l\'écran\n`+
+        `  logout                            Ferme la session\n`+
+        `\n  eSIM (gestion sécurisée locale)\n`+
+        `  esim.add --smdp=<url> --code=<activation> [--label=<nom>]  Ajoute un profil\n`+
+        `  esim.list                         Liste les profils\n`+
+        `  esim.show <id>                    Détail d\'un profil\n`+
+        `  esim.export <id>                  Export chiffré (JSON)\n`+
+        `  esim.delete <id>                  Supprime un profil\n`+
+        `\n  Partenaires / Audit\n`+
+        `  partner.push <url>                Envoie profils chiffrés (POST)\n`+
+        `  audit.tail                        Derniers événements\n`);
+    },
+
+    whoami(){
+      const s=ST.session; if(!s) return append('Non connecté');
+      append(`Rôle: ${s.role}\nOrganisation: ${s.org||'—'}\nSession: ${s.label||'—'}`);
+    },
+
+    async 'lte.status'(){ setKV(); append('Etat LTE mis à jour (API navigateur).'); },
+
+    clear(){ out.textContent=''; },
+
+    logout(){ logout(); },
+
+    async 'esim.add'(args){
+      const smdp = args['--smdp'];
+      const code = args['--code'];
+      const label= args['--label']||'profil';
+      if(!smdp || !code) return append('\u26a0\ufe0f Usage: esim.add --smdp=<url> --code=<activation> [--label=<nom>]');
+      const item = {id:genId(), label, smdp, code, meta:{who:ST.session?.role, org:ST.session?.org}, createdAt:now()};
+      ST.profiles.push(item); saveLocal(); audit('esim.add',{id:item.id,label});
+      append(`\u2705 Profil ajouté: ${item.id} [${label}]`);
+      setKV();
+    },
+
+    'esim.list'(){
+      if(!ST.profiles.length) return append('Aucun profil enregistré');
+      ST.profiles.forEach(p=> append(`- ${p.id}  \u00bb ${p.label}  [${p.smdp}]`));
+    },
+
+    'esim.show'(args){
+      const id = args._[0]; if(!id) return append('Usage: esim.show <id>');
+      const p = ST.profiles.find(x=>x.id===id); if(!p) return append('Inconnu');
+      append(JSON.stringify(p,null,2));
+    },
+
+    async 'esim.export'(args){
+      const id = args._[0]; if(!id) return append('Usage: esim.export <id>');
+      const p = ST.profiles.find(x=>x.id===id); if(!p) return append('Inconnu');
+      if(!ST.dbKey) return append('Session non chiffrée');
+      const payload = await encryptJSON(p, ST.dbKey);
+      const blob = new Blob([JSON.stringify(payload)],{type:'application/json'});
+      const url = URL.createObjectURL(blob);
+      const a = Object.assign(document.createElement('a'),{href:url,download:`${id}.esim.enc.json`});
+      a.click(); URL.revokeObjectURL(url);
+      append(`\u2705 Exporté (chiffré): ${id}.esim.enc.json`);
+      audit('esim.export',{id});
+    },
+
+    'esim.delete'(args){
+      const id = args._[0]; if(!id) return append('Usage: esim.delete <id>');
+      const i = ST.profiles.findIndex(x=>x.id===id); if(i<0) return append('Inconnu');
+      const [p]=ST.profiles.splice(i,1); saveLocal(); audit('esim.delete',{id:p.id});
+      append(`\u274c Supprimé: ${p.id}`); setKV();
+    },
+
+    async 'partner.push'(args){
+      const url = args._[0]; if(!url) return append('Usage: partner.push <https://endpoint>');
+      if(!ST.dbKey) return append('Session non chiffrée');
+      const bundle = await encryptJSON({profiles:ST.profiles, audit:ST.audit.slice(-200)}, ST.dbKey);
+      try{
+        const res = await fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({ts:now(), org:ST.session?.org, data:bundle})});
+        append(`\u2705 Poussé vers partenaire: HTTP ${res.status}`);
+        audit('partner.push',{url,status:res.status});
+      }catch(e){ append('\u26a0\ufe0f Échec push partenaire: '+e.message); }
+    },
+
+    'audit.tail'(){
+      const items = ST.audit.slice(-12);
+      items.forEach(i=> append(`[${i.t}] ${i.ev} ${JSON.stringify({...i, t:undefined, ev:undefined})}`));
+    },
+  };
+
+  // --- Parser commandes ---
+  function parseArgs(line){
+    const parts = line.trim().split(/\s+/);
+    const cmd = parts.shift()||'';
+    const args = {_ : []};
+    for(const p of parts){
+      if(p.startsWith('--')){
+        const [k,v] = p.split('='); args[k]=v ?? true;
+      } else { args._.push(p); }
+    }
+    return {cmd,args};
+  }
+
+  async function runLine(line){
+    if(!line.trim()) return;
+    ST.history.push(line);
+    append('> '+line);
+    const {cmd, args} = parseArgs(line);
+    const fn = CMDS[cmd];
+    if(!fn){ append('\u26a0\ufe0f Commande inconnue. Tapez `help`.'); return; }
+    try{ await fn(args); }
+    catch(e){ append('\u274c '+e.message); }
+  }
+
+  // --- UI WIRING ---
+  $('#btnLogin').addEventListener('click', async () => {
+    const role = $('#role').value; const pass = $('#pass').value; const org=$('#org').value; const label=$('#label').value;
+    try{
+      await login(role, pass, org, label);
+      $('#sessionPill').textContent = `Session: ${role} • ${label||'—'}`;
+      $('#loginCard').classList.add('hidden');
+      $('#mainGrid').classList.remove('hidden');
+      append('Tapez `help` pour la liste des commandes.');
+    }catch(e){ alert(e.message); }
+  });
+
+  $('#btnRevealPolicy').addEventListener('click', ()=>{
+    alert('Politique: chiffrement local AES-GCM via passphrase de session (PBKDF2). Aucune activation eSIM directe via navigateur. Données stockées localStorage chiffrées côté utilisateur via export.');
+  });
+
+  $('#run').addEventListener('click', ()=>{ const v=$('#cmd').value; $('#cmd').value=''; runLine(v); });
+  $('#cmd').addEventListener('keydown', e=>{ if(e.key==='Enter'){ const v=e.target.value; e.target.value=''; runLine(v); }});
+
+  // Quick buttons
+  $('#quick').addEventListener('click', e=>{
+    const b = e.target.closest('button[data-cmd]'); if(!b) return;
+    const c = b.getAttribute('data-cmd'); runLine(c);
+  });
+
+  // Warm welcome
+  append('IA22_LOGIC • Terminal LTE eSIM — prêt.');
+  append('Accédez avec une clé et tapez `help`.');
+})();
+// =================== / IA22_LOGIC ===================
+</script></body>
+</html>
