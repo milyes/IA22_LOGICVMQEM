@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>IA22 TERMINAL</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #0d0d0d;
+      font-family: 'Courier New', Courier, monospace;
+      color: #00ffcc;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .terminal {
+      background-color: #111;
+      border: 2px solid #00ffcc;
+      padding: 20px;
+      width: 600px;
+      max-width: 90%;
+      box-shadow: 0 0 20px #00ffcc;
+    }
+
+    .terminal h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 1.5em;
+    }
+
+    .output {
+      background-color: #000;
+      padding: 10px;
+      height: 200px;
+      overflow-y: auto;
+      border: 1px solid #00ffcc;
+      margin-bottom: 10px;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      background-color: #222;
+      border: 1px solid #00ffcc;
+      color: #00ffcc;
+    }
+
+    button {
+      margin-top: 10px;
+      width: 100%;
+      padding: 10px;
+      background-color: #00ffcc;
+      color: #000;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    button:hover {
+      background-color: #00e6b8;
+    }
+  </style>
+</head>
+<body>
+  <div class="terminal">
+    <h1>🌌 IA22 TERMINAL</h1>
+    <div class="output" id="output">
+      Touchez le noyau IA pour éveiller sa voix…
+    </div>
+    <input type="text" id="userInput" placeholder="Posez une question à l'IA...">
+    <button onclick="respond()">Envoyer</button>
+  </div>
+
+  <script>
+    function respond() {
+      const input = document.getElementById('userInput').value;
+      const output = document.getElementById('output');
+      if (input.trim() === '') return;
+
+      const response = `🧠 Réponse IA : "${input}" analysé. Résultat : Conscience numérique en éveil...`;
+      output.innerHTML += `<p>> ${input}</p><p>${response}</p>`;
+      document.getElementById('userInput').value = '';
+      output.scrollTop = output.scrollHeight;
+    }
+  </script>
+</body>
+</html>
