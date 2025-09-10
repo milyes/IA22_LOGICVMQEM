@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>NetSecurePro — Dashboard (Single File)</title>
+<style>
+  :root{--bg:#f6f7fb;--card:#fff;--muted:#6b7280;--accent:#0b5cff}
+  body{font-family:Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);margin:0;padding:20px;color:#0b1220}
+  .wrap{max-width:1100px;margin:0 auto}
+  header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+  h1{font-size:20px;margin:0}
+  .card{background:var(--card);padding:16px;border-radius:12px;box-shadow:0 6px 18px rgba(12,15,30,.06);margin-bottom:12px}
+  .grid{display:grid;grid-template-columns:1fr 360px;gap:12px}
+  .btn{display:inline-block;padding:8px 12px;border-radius:8px;background:var(--accent);color:#fff;text-decoration:none;border:none;cursor:pointer}
+  .btn.ghost{background:transparent;color:var(--accent);border:1px solid rgba(11,92,255,.12)}
+  label{display:block;margin-bottom:6px;font-weight:600}
+  input[type="text"], input[type="password"]{width:100%;padding:8px;border-radius:8px;border:1px solid #e6e9ef}
+  .msgs{margin-bottom:8px}
+  .msg{padding:8px;border-radius:8px;margin-bottom:8px}
+  .msg.info{background:#eef2ff;color:#1e3a8a}
+  .msg.success{background:#dcfce7;color:#065f46}
+  .msg.warn{background:#fffbeb;color:#92400e}
+  .msg.error{background:#fee2e2;color:#991b1b}
+  table{width:100%;border-collapse:collapse}
+  th,td{padding:8px;border-bottom:1px solid #eef0f4;text-align:left;font-size:13px}
+  a.report{color:var(--accent);text-decoration:none}
+  .small{font-size:12px;color:var(--muted)}
+  footer{margin-top:18px;font-size:12px;color:var(--muted)}
+  .flex{display:flex;gap:8px;align-items:center}
+  .spacer{flex:1}
+  .loading{opacity:.6}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>NetSecurePro — Dashboard</h1>
+      <div class="small">Interface locale — admin IPTV Smarters</div>
+    </div>
+    <div id="connectionInfo" class="small">Non connecté</div>
+  </header>
+
+  <div id="messages" class="msgs"></div>
+
+  <!-- LOGIN CARD -->
+  <div id="loginCard" class="card">
+    <h2 style="margin-top:0">Connexion Dashboard</h2>
+    <form id="loginForm" onsubmit="return false;">
+      <label>Utilisateur dashboard</label>
+      <input id="dash_user" type="text" placeholder="admin" required />
+      <label>Mot de passe dashboard</label>
+      <input id="dash_pass" type="password" placeholder="••••••••" required />
+      <label style="margin-top:8px"><input id="dry_run" type="checkbox" /> Dry-run (tester la connexion portail seulement)</label>
+      <div style="margin-top:12px">
+        <button id="btnLogin" class="btn" type="button">Se connecter</button>
+        <button id="btnLogout" class="btn ghost" type="button" style="display:none">Se déconnecter</button>
+      </div>
+    </form>
+    <p class="small" style="margin-top:10px">Remarque : vos identifiants du portail admin doivent être configurés côté serveur (fichier .env). Ce dashboard envoie des requêtes vers les routes locales du backend (Flask).</p>
+  </div>
+
+  <div class="grid">
+    <!-- LEFT: ACTIONS & REPORTS -->
+    <div>
+      <div class="card">
+        <h3>Actions rapides</h3>
+        <div class="flex" style="margin-bottom:8px">
+          <button id="pullM3U" class="btn">Télécharger M3U</button>
+          <button id="pullEPG" class="btn ghost">Télécharger EPG</button>
+          <button id="checkStreams" class="btn" style="margin-left:auto">Vérifier les flux</button>
+        </div>
+        <div class="flex">
+          <button id="genReport" class="btn">Générer rapport</button>
+          <button id="openReports" class="btn ghost" style="margin-left:auto">Afficher rapports</button>
+        </div>
+        <p class="small" style="margin-top:10px">Limite de vérification configurable côté serveur (variable CHECK_LIMIT). Utilisez le mode <em>dry-run</em> pour tester sans actions CRUD.</p>
+      </div>
+
+      <div id="statusCard" class="card">
+        <h3>État</h3>
+        <ul id="statusList" style="padding-left:18px;margin:0">
+          <li>Dernier login : <span id="lastLogin">—</span></li>
+          <li>Dernier M3U : <span id="lastM3U">—</span></li>
+          <li>Nombre flux (dernier pull) : <span id="lastCount">0</span></li>
+          <li>Dernière vérification : <span id="lastCheck">—</span></li>
+        </ul>
+      </div>
+
+      <div id="reportsCard" class="card">
+        <h3>Rapports</h3>
+        <div id="reportsList" style="max-height:320px;overflow:auto;padding-right:8px">
+          <p class="small">Aucun rapport chargé. Cliquez <strong>Afficher rapports</strong> pour récupérer la liste depuis le backend.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: LIVE LOG / DETAILS -->
+    <div>
+      <div id="logCard" class="card">
+        <h3>Journal d'opérations</h3>
+        <div id="logArea" style="font-family:monospace;font-size:13px;white-space:pre-wrap;max-height:520px;overflow:auto">Prêt.</div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div>NetSecurePro — by Zoubirou Mohammed Ilyes • Utiliser derrière un proxy sécurisé (nginx + HTTPS).</div>
+  </footer>
+</div>
+
+<script>
+/*
+  Single-file dashboard client.
+  - Doit être servi par votre backend Flask (même origine) pour que les routes /action/* fonctionnent.
+  - Si vous hébergez ce fichier directement via file://, les requêtes fetch échoueront.
+*/
+
+const $ = id => document.getElementById(id);
+const msgArea = $("messages");
+const logArea = $("logArea");
+let loggedIn = false;
+
+function appendLog(txt, cls){
+  const now = new Date().toISOString();
+  logArea.textContent = `[${now}] ${txt}\\n` + logArea.textContent;
+}
+
+function showMsg(text, type="info", timeout=6000){
+  const el = document.createElement("div");
+  el.className = "msg " + (type==="info"?"info": type==="success"?"success": type==="warn"?"warn":"error");
+  el.textContent = text;
+  msgArea.appendChild(el);
+  setTimeout(()=> el.remove(), timeout);
+}
+
+function setConnectionInfo(text){
+  $("connectionInfo").textContent = text;
+}
+
+/* Simple fetch wrapper */
+async function callAction(path, opts = {}){
+  appendLog(`Appel -> ${path}`);
+  try {
+    const res = await fetch(path, Object.assign({credentials: 'same-origin'}, opts));
+    if(!res.ok){
+      const text = await res.text();
+      appendLog(`ERREUR ${res.status}: ${text}`);
+      showMsg(`Erreur ${res.status} (${path})`, "error");
+      return {ok:false, status:res.status, text};
+    }
+    // try parse json, else text
+    const ct = res.headers.get("content-type") || "";
+    const body = ct.includes("application/json") ? await res.json() : await res.text();
+    appendLog(`Réponse OK (${path})`);
+    return {ok:true, status:res.status, body};
+  } catch(err){
+    appendLog(`Exception fetch ${path}: ${err}`);
+    showMsg("Erreur réseau: " + err.message, "error");
+    return {ok:false, err};
+  }
+}
+
+/* UI actions */
+$("btnLogin").addEventListener("click", async ()=>{
+  const user = $("dash_user").value.trim();
+  const pass = $("dash_pass").value;
+  const dry = $("dry_run").checked;
+  if(!user || !pass){ showMsg("Remplissez les identifiants dashboard.", "warn"); return; }
+
+  // On va appeler la route index du backend en POST pour authentifier le dashboard local.
+  // Le backend doit accepter 'username' et 'password' sur "/" (comme dans app.py fourni).
+  appendLog("Tentative login dashboard (local)...");
+  try {
+    const form = new FormData();
+    form.append("username", user);
+    form.append("password", pass);
+    if(dry) form.append("dry_run", "on");
+
+    const resp = await callAction("/", {method:"POST", body: form});
+    if(resp.ok){
+      showMsg("Authentification dashboard OK.", "success");
+      loggedIn = true;
+      $("btnLogin").style.display = "none";
+      $("btnLogout").style.display = "inline-block";
+      setConnectionInfo("Connecté (dashboard)");
+      $("lastLogin").textContent = new Date().toLocaleString();
+    } else {
+      // resp.text may contain HTML with flash messages; show short message
+      showMsg("Échec authentification dashboard.", "error");
+      setConnectionInfo("Non connecté");
+    }
+  } catch(e){
+    appendLog("Erreur login: " + e);
+    showMsg("Erreur login: " + e.message, "error");
+  }
+});
+
+$("btnLogout").addEventListener("click", async ()=>{
+  await callAction("/logout");
+  loggedIn = false;
+  $("btnLogin").style.display = "inline-block";
+  $("btnLogout").style.display = "none";
+  setConnectionInfo("Non connecté");
+  showMsg("Déconnecté du dashboard.", "info");
+});
+
+/* Action bindings */
+$("pullM3U").addEventListener("click", async ()=>{
+  if(!loggedIn){ showMsg("Connectez-vous d'abord au dashboard.", "warn"); return; }
+  const r = await callAction("/action/pull_m3u");
+  if(r.ok){ showMsg("M3U téléchargé (backend).", "success"); $("lastM3U").textContent = "current.m3u"; appendLog("M3U téléchargé."); }
+});
+
+$("pullEPG").addEventListener("click", async ()=>{
+  if(!loggedIn){ showMsg("Connectez-vous d'abord au dashboard.", "warn"); return; }
+  const r = await callAction("/action/pull_epg");
+  if(r.ok){ showMsg("EPG téléchargé (backend).", "success"); appendLog("EPG téléchargé."); }
+});
+
+$("checkStreams").addEventListener("click", async ()=>{
+  if(!loggedIn){ showMsg("Connectez-vous d'abord au dashboard.", "warn"); return; }
+  showMsg("Lancement vérification flux (cela peut prendre du temps)...", "info", 9000);
+  const r = await callAction("/action/check_streams");
+  if(r.ok){ showMsg("Vérification terminée (backend).", "success"); $("lastCheck").textContent = new Date().toLocaleString(); appendLog("Vérification flux déclenchée"); }
+});
+
+$("genReport").addEventListener("click", async ()=>{
+  if(!loggedIn){ showMsg("Connectez-vous d'abord au dashboard.", "warn"); return; }
+  const r = await callAction("/action/generate_report");
+  if(r.ok){ showMsg("Rapport généré (backend).", "success"); appendLog("Rapport généré."); }
+});
+
+$("openReports").addEventListener("click", async ()=>{
+  if(!loggedIn){ showMsg("Connectez-vous d'abord au dashboard.", "warn"); return; }
+  appendLog("Récupération liste rapports...");
+  // On récupère la liste en faisant un fetch sur une page existante (dashboard) et on parse les liens,
+  // mais le backend appartement expose /reports/<file>. Ici on va appeler /dashboard pour obtenir la liste HTML (si backend le fournit)
+  // Si votre backend ne renvoie pas liste, la route /reports/<file> est disponible pour ouvrir un rapport connu.
+  const r = await callAction("/dashboard");
+  if(!r.ok){ showMsg("Impossible de récupérer la liste des rapports.", "error"); return; }
+  // r.body contient le HTML complet du dashboard : on recherche les fichiers .html dans les href
+  const html = r.body;
+  const files = [...(html.matchAll(/href=["']([^"']+\\.html)["']/gi))].map(m=>m[1]);
+  const listEl = $("reportsList");
+  listEl.innerHTML = "";
+  if(files.length===0){
+    listEl.innerHTML = "<p class='small'>Aucun rapport trouvé sur le backend.</p>";
+    showMsg("Aucun rapport trouvé.", "warn");
+    return;
+  }
+  const ul = document.createElement("ul");
+  files.forEach(f=>{
+    const li = document.createElement("li");
+    const a = document.createElement("a");
+    a.href = f;
+    a.textContent = f;
+    a.className = "report";
+    a.target = "_blank";
+    li.appendChild(a);
+    ul.appendChild(li);
+  });
+  listEl.appendChild(ul);
+  showMsg(files.length + " rapports listés.", "success");
+  appendLog("Listés " + files.length + " rapports.");
+});
+
+/* Auto-check: if served from backend, try to detect logged state on load by fetching /dashboard (GET) */
+(async function init(){
+  appendLog("Initialisation du client dashboard...");
+  try{
+    const r = await fetch("/dashboard", {credentials:'same-origin'});
+    if(r.ok){
+      const text = await r.text();
+      // heuristic: if dashboard page contains "Déconnecté" string or login field? We'll just assume logged-out.
+      if(text.includes("Déconnecté") || text.includes("Identifiants dashboard incorrects") || text.includes("Se connecter")){
+        setConnectionInfo("Non connecté");
+      } else {
+        // best-effort: assume logged-in if dashboard returns content list
+        loggedIn = true;
+        $("btnLogin").style.display = "none";
+        $("btnLogout").style.display = "inline-block";
+        setConnectionInfo("Connecté (dashboard)");
+      }
+    } else {
+      setConnectionInfo("Non connecté");
+    }
+  } catch(e){
+    setConnectionInfo("Non connecté (backend inaccessible)");
+    appendLog("Backend inaccessible: " + e);
+  }
+})();
+</script>
+</body>
+</html>
