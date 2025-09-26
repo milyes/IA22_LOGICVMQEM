@@ -52,5 +52,6 @@ Fondateur de **NetSecurePro IA**
 Ce projet est distribué sous licence **MIT**. Voir [LICENSE.md](./LICENSE.md).
 
 ---
-
+- [IA22_LOGICVMQEM](https://github.com/milyes/IA22_LOGICVMQEM) – Moteur IA local sécurisé  
+  > Interface WebView, QR GitHub, documentation FR/EN, scellé MIT
 ## 🚀 Built with ❤️ by NetSecurePro IA
