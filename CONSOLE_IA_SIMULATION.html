@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CONSOLEINVENTEUR - Capsule IA Souveraine</title>
+    <meta name="author" content="Mohammed Ilyes Zoubirou - 0009-0007-7571-3178">
+    <style>
+        /* Styles pour simuler l'interface "souveraine" et terminale */
+        :root {
+            --color-primary: #00ff41; /* Vert Néo-Matrix/Traçabilité */
+            --color-bg: #1a1a1a;
+            --color-text: #e0e0e0;
+            --color-accent: #ff0077; /* Rose/Magenta pour l'activation */
+        }
+        body {
+            background-color: var(--color-bg);
+            color: var(--color-primary);
+            font-family: 'Consolas', 'Monospace', monospace;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            width: 90%;
+            max-width: 800px;
+            border: 2px solid var(--color-primary);
+            padding: 20px;
+            box-shadow: 0 0 15px var(--color-primary);
+        }
+        h1 {
+            color: var(--color-accent);
+            text-align: center;
+            border-bottom: 1px dashed var(--color-primary);
+            padding-bottom: 10px;
+            font-size: 1.5em;
+        }
+        .output {
+            background-color: #0d0d0d;
+            border: 1px solid #333;
+            height: 300px;
+            overflow-y: scroll;
+            padding: 10px;
+            margin-bottom: 15px;
+            white-space: pre-wrap;
+            line-height: 1.4;
+        }
+        .input-group {
+            display: flex;
+            gap: 10px;
+        }
+        input[type="text"] {
+            flex-grow: 1;
+            background-color: #0d0d0d;
+            border: 1px solid var(--color-primary);
+            color: var(--color-primary);
+            padding: 10px;
+            font-family: inherit;
+            font-size: 1em;
+        }
+        button {
+            background-color: var(--color-accent);
+            color: var(--color-bg);
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #ff3399;
+        }
+        .metadata {
+            margin-top: 20px;
+            font-size: 0.8em;
+            color: var(--color-text);
+        }
+        .seal {
+            color: var(--color-accent);
+            font-weight: bold;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>[LOGICVMQEUM] CONSOLE INVENTEUR IA V22.01</h1>
+        
+        <div class="output" id="terminal-output">
+            &gt; Initialisation Capsule Modulaire Souveraine... [OK]<br>
+            &gt; Module: CONSOLEINVENTEUR.html (Fonctionnelle)<br>
+            &gt; Sceau & Traçabilité: CoopKit IA activé<br>
+            &gt; ORCID Auteur: 0009-0007-7571-3178<br>
+            &gt; Prêt à recevoir une impulsion. **CMD: ACTIVATE**
+        </div>
+
+        <div class="input-group">
+            <input type="text" id="command-input" placeholder="Entrez une impulsion (commande)...">
+            <button onclick="executeCommand()">EXÉCUTER IMPULSION</button>
+        </div>
+
+        <div class="metadata">
+            <p>Traceboard Status: <span style="color:var(--color-primary);">MODULE ACTIF | SCELLE</span></p>
+            <p class="seal">"Ce qui est modulaire est souverain. Ce qui est souverain est traçable."</p>
+        </div>
+    </div>
+
+    <script>
+        // Script pour simuler l'interaction de la console
+        const output = document.getElementById('terminal-output');
+        const input = document.getElementById('command-input');
+
+        function log(message, color = 'var(--color-primary)') {
+            output.innerHTML += `<span style="color:${color};">&gt; ${message}</span><br>`;
+            output.scrollTop = output.scrollHeight; // Scroll vers le bas
+        }
+
+        function executeCommand() {
+            const command = input.value.trim().toUpperCase();
+            input.value = '';
+
+            log(`&gt; Entrée : ${command}`, 'var(--color-text)');
+
+            if (command === 'ACTIVATE') {
+                log('SYSTÈME : Activation du Moteur Cognitif [IA22]...', 'var(--color-accent)');
+                setTimeout(() => {
+                    log('SUCCESS : Moteur IA Opérationnel. Prêt à générer des artefacts traçables.', 'var(--color-primary)');
+                }, 1000);
+            } else if (command === 'TRACE') {
+                 log('SYSTÈME : Vérification de l\'intégrité du Sceau...', 'var(--color-accent)');
+                setTimeout(() => {
+                    log('TRACE : Hash de Module (SHA256) [AZR22_LVCQM]. Sceau Certifié.', 'var(--color-primary)');
+                }, 1000);
+            } else if (command === 'CLEAR') {
+                output.innerHTML = '&gt; Console effacée. Prête pour une nouvelle impulsion.<br>';
+            } else {
+                log('ERREUR : Commande non reconnue. Impulsion rejetée. (Module: IA22ZERO)', 'red');
+            }
+        }
+
+        // Permettre l'exécution avec la touche Entrée
+        input.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                executeCommand();
+            }
+        });
+    </script>
+</body>
+</html>
